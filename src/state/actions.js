@@ -1,5 +1,7 @@
 import { createAction } from 'redux-helper';
 
 export default {
-  hideOverview: createAction('HIDE_OVERVIEW')
+  playLeader: createAction('PLAY_LEADER'),
+  playUnit: createAction('PLAY_UNIT'),
+  playSpecial: createAction('PLAY_SPECIAL')
 };

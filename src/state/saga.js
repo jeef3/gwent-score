@@ -1,3 +1,1 @@
-export function* saga() {
-
-}
+export function* saga() {}

@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // import styled from 'styled-components';
 
 import Board from './components/Board';
+import Modal from './components/Modal';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import { saga, reducer } from './state';
@@ -20,21 +21,25 @@ const store = createStore(
 
 const App = () => (
   <Provider store={store}>
-    <PageLayout>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between'
-        }}
-      >
-        <div>Haley</div>
-        <div>Jeff</div>
-      </div>
+    <div>
+      <PageLayout>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
+        >
+          <div>Haley</div>
+          <div>Jeff</div>
+        </div>
 
-      <Board />
+        <Board />
 
-      <TabBar />
-    </PageLayout>
+        <TabBar />
+      </PageLayout>
+
+      <Modal />
+    </div>
   </Provider>
 );
 

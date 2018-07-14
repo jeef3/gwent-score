@@ -1,4 +1,5 @@
 export default {
+  showModa: false,
   cards: {
     a: {
       hero: false,

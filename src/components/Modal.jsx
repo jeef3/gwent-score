@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { Actions } from '../state';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
 
@@ -15,7 +16,7 @@ DialogLayout.displayName = 'DialogLayout';
 export default connect(
   state => ({ showModal: state.showModal }),
   dispatch => ({
-    onCancel: () => dispatch({}),
+    onCancel: () => dispatch(Actions.closeModal()),
     onAddCard: () => dispatch({})
   })
 )(

@@ -2,8 +2,11 @@ import createReducerAction from './createReducerAction';
 import initialState from './state';
 
 export const StateActions = {
-  showModal: createReducerAction('→ SHOW_MODAL', () => ({
+  modalShown: createReducerAction('→ MODAL_SHOWN', () => ({
     showModal: true
+  })),
+  modalHidden: createReducerAction('→ MODAL_HIDDEN', () => ({
+    showModal: false
   }))
 };
 

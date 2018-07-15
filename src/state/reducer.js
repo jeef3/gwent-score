@@ -7,6 +7,10 @@ export const StateActions = {
   })),
   modalHidden: createReducerAction('→ MODAL_HIDDEN', () => ({
     showModal: false
+  })),
+
+  cardAdded: createReducerAction('→ CARD_ADDED', (state, action) => ({
+    cards: [...state.cards, action.payload.card]
   }))
 };
 

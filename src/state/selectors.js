@@ -1,5 +1,5 @@
 export const getPlayerAClose = state =>
-  state.playerA.close.map(id => state.cards[id]);
+  state.cards.filter(card => card.player === 'a' && card.combat === 'close');
 
 export const getPlayerBClose = state =>
-  state.playerB.close.map(id => state.cards[id]);
+  state.cards.filter(card => card.player === 'b' && card.combat === 'close');

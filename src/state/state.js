@@ -1,29 +1,26 @@
 export default {
-  showModal: true,
-  cards: {
-    a: {
+  showModal: false,
+  cards: [
+    {
+      player: 'a',
       hero: false,
       points: 5,
       attrs: 'muster',
       combat: 'close'
     },
-    b: {
+    {
+      player: 'a',
       hero: false,
       points: 5,
       attrs: 'muster',
       combat: 'close'
+    },
+    {
+      player: 'b',
+      hero: true,
+      points: 15,
+      attrs: null,
+      combat: 'close'
     }
-  },
-
-  playerA: {
-    close: ['a', 'b'],
-    ranged: [],
-    siege: []
-  },
-
-  playerB: {
-    close: [],
-    ranged: [],
-    siege: []
-  }
+  ]
 };

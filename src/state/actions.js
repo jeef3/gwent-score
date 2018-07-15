@@ -5,5 +5,7 @@ export default {
   playUnit: createAction('PLAY_UNIT'),
   playSpecial: createAction('PLAY_SPECIAL'),
 
+  addCard: createAction('ADD_CARD'),
+
   closeModal: createAction('CLOSE_MODAL')
 };

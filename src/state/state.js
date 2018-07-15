@@ -16,6 +16,22 @@ export default {
       combat: 'close'
     },
     {
+      player: 'a',
+      hero: false,
+      points: null,
+      attrs: null,
+      combat: 'close',
+      special: 'commander-horn'
+    },
+    {
+      player: null,
+      hero: false,
+      points: null,
+      attrs: null,
+      combat: null,
+      special: 'biting-frost'
+    },
+    {
       player: 'b',
       hero: true,
       points: 15,

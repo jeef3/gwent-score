@@ -37,12 +37,24 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           onChange={handleChange}
         />
       </div>
+
+      <div>
+        Hero?
+        <input
+          type="checkbox"
+          name="hero"
+          checked={values.hero}
+          onChange={handleChange}
+        />
+      </div>
+
       <div>
         Select combat
         <select name="combat" value={values.combat} onChange={handleChange}>
           <option value="close">Close</option>
           <option value="ranged">Ranged</option>
           <option value="siege">Siege</option>
+          <option value="special">Special</option>
         </select>
       </div>
       <div>
@@ -75,6 +87,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
 const TheForm = withFormik({
   mapPropsToValues: ({ player, points, combat, attr, onCancel }) => ({
     player,
+    hero: false,
     points: points || 0,
     combat,
     attr,

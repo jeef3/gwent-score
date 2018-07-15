@@ -28,9 +28,26 @@ export default connect(
           <DialogLayout>
             <div>Add Card</div>
 
-            <div>Select points</div>
-            <div>Select combat</div>
-            <div>Select Attr</div>
+            <div>
+              Select points
+              <input type="number" value="0" />
+            </div>
+            <div>
+              Select combat
+              <select>
+                <option value="close">Close</option>
+                <option value="ranged">Ranged</option>
+                <option value="siege">Siege</option>
+              </select>
+            </div>
+            <div>
+              Select Attr
+              <select>
+                <option value="none">None</option>
+                <option value="muster">Muster</option>
+                <option value="moral-boost">Morale Boost</option>
+              </select>
+            </div>
 
             <div
               style={{

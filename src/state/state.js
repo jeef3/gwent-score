@@ -1,5 +1,5 @@
 export default {
-  showModa: false,
+  showModal: true,
   cards: {
     a: {
       hero: false,

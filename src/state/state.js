@@ -29,7 +29,7 @@ export default {
       points: null,
       attrs: null,
       combat: 'close',
-      special: 'biting-frost'
+      special: 'weather'
     },
     {
       player: 'b',

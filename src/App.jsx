@@ -3,7 +3,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
-// import styled from 'styled-components';
 
 import Board from './components/Board';
 import Modal from './components/Modal';

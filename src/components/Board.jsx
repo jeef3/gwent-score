@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { getFullBoard } from '../state/selectors';
+import Card from './Card';
 
 const Row = styled.div`
   margin: 0 0 5px;
@@ -32,16 +33,6 @@ const CombatRow = styled.div`
 `;
 CombatRow.displayName = 'CombatRow';
 
-const Card = styled.div`
-  padding: 2px;
-  margin: 2px;
-
-  border: solid 1px black;
-
-  background: lightgray;
-`;
-Card.displayName = 'Card';
-
 const Score = styled.h2`
   margin: 0;
 
@@ -63,21 +54,21 @@ export default connect(state => ({
       <Row>
         <RowName>Close</RowName>
         <CombatRow>
-          {board.playerA.close.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerA.close.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score style={{ gridArea: 'score' }}>{board.playerA.close.score}</Score>
       </Row>
       <Row>
         <RowName>Ranged</RowName>
         <CombatRow>
-          {board.playerA.ranged.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerA.ranged.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score>{board.playerA.ranged.score}</Score>
       </Row>
       <Row>
         <RowName>Siege</RowName>
         <CombatRow>
-          {board.playerA.siege.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerA.siege.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score>{board.playerA.siege.score}</Score>
       </Row>
@@ -86,21 +77,21 @@ export default connect(state => ({
       <Row>
         <RowName>Close</RowName>
         <CombatRow>
-          {board.playerB.close.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerB.close.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score>{board.playerB.close.score}</Score>
       </Row>
       <Row>
         <RowName>Ranged</RowName>
         <CombatRow>
-          {board.playerB.ranged.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerB.ranged.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score>{board.playerB.ranged.score}</Score>
       </Row>
       <Row>
         <RowName>Siege</RowName>
         <CombatRow>
-          {board.playerB.siege.cards.map(c => <Card>{c.points}</Card>)}
+          {board.playerB.siege.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
         <Score>{board.playerB.siege.score}</Score>
       </Row>

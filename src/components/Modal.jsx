@@ -11,78 +11,107 @@ const DialogLayout = styled.div`
   height: 100%;
 
   display: grid;
-  grid-template-rows: 40px auto auto auto 40px;
+  grid-template-rows: 40px 1fr 40px;
 `;
 DialogLayout.displayName = 'DialogLayout';
 
+const Button = styled.button`
+  flex: 1;
+
+  margin: 0;
+
+  color: white;
+  font-size: inherit;
+
+  border: 0;
+
+  background: transparent;
+`;
+Button.displayName = 'Button';
+
 const InnerForm = ({ values, handleChange, handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
+  <form style={{ display: 'contents' }} onSubmit={handleSubmit}>
     <DialogLayout>
-      <div>Add Card</div>
+      <h2 style={{ margin: 0, alignSelf: 'center', textAlign: 'center' }}>
+        Add Card
+      </h2>
 
-      <div>
-        Select player
-        <select name="player" value={values.player} onChange={handleChange}>
-          <option />
-          <option value="a">Player A</option>
-          <option value="b">Player B</option>
-        </select>
-      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <label htmlFor="player">
+          Select player
+          <select name="player" value={values.player} onChange={handleChange}>
+            <option />
+            <option value="a">Player A</option>
+            <option value="b">Player B</option>
+          </select>
+        </label>
 
-      <div>
-        Select points
-        <input
-          type="number"
-          name="points"
-          value={values.points}
-          onChange={handleChange}
-        />
-      </div>
+        <label htmlFor="points">
+          Select points
+          <input
+            type="number"
+            name="points"
+            value={values.points}
+            onChange={handleChange}
+          />
+        </label>
 
-      <div>
-        Hero?
-        <input
-          type="checkbox"
-          name="hero"
-          checked={values.hero}
-          onChange={handleChange}
-        />
-      </div>
+        <label htmlFor="hero">
+          Hero?
+          <input
+            type="checkbox"
+            name="hero"
+            checked={values.hero}
+            onChange={handleChange}
+          />
+        </label>
 
-      <div>
-        Select combat
-        <select name="combat" value={values.combat} onChange={handleChange}>
-          <option />
-          <option value="close">Close</option>
-          <option value="ranged">Ranged</option>
-          <option value="siege">Siege</option>
-          <option value="special">Special</option>
-        </select>
-      </div>
-      <div>
-        Select Attr
-        <select name="attr" value={values.attr} onChange={handleChange}>
-          <option />
-          <option value="muster">Muster</option>
-          <option value="morale-boost">Morale Boost</option>
-          <option value="commander-horn">Commander Horn</option>
-          <option value="medic">Medic</option>
-        </select>
+        <label htmlFor="combat">
+          Select combat
+          <select name="combat" value={values.combat} onChange={handleChange}>
+            <option />
+            <option value="close">Close</option>
+            <option value="ranged">Ranged</option>
+            <option value="siege">Siege</option>
+            <option value="special">Special</option>
+          </select>
+        </label>
+
+        <label htmlFor="attr">
+          Select Attr
+          <select name="attr" value={values.attr} onChange={handleChange}>
+            <option />
+            <option value="muster">Muster</option>
+            <option value="morale-boost">Morale Boost</option>
+            <option value="commander-horn">Commander Horn</option>
+            <option value="medic">Medic</option>
+            <option value="spy">Spy</option>
+          </select>
+        </label>
       </div>
 
       <div
         style={{
           backgroundColor: 'lightgray',
           display: 'flex',
-          flexDirection: 'row-reverse',
-          justifyContent: 'space-around',
-          alignItems: 'center'
+          flexDirection: 'row-reverse'
         }}
       >
-        <button type="submit">Add Card</button>
-        <button type="button" onClick={values.onCancel}>
+        <Button style={{ background: 'green' }} type="submit">
+          Add Card
+        </Button>
+        <Button
+          style={{ background: 'red' }}
+          type="button"
+          onClick={values.onCancel}
+        >
           Cancel
-        </button>
+        </Button>
       </div>
     </DialogLayout>
   </form>

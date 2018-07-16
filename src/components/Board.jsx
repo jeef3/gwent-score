@@ -33,8 +33,8 @@ const CombatRow = styled.div`
 CombatRow.displayName = 'CombatRow';
 
 const Card = styled.div`
-  margin: 2px;
   padding: 2px;
+  margin: 2px;
 
   border: solid 1px black;
 
@@ -49,10 +49,16 @@ const Score = styled.h2`
 `;
 Score.displayName = 'Score';
 
+const Scroller = styled.div`
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+`;
+Scroller.displayName = 'Scroller';
+
 export default connect(state => ({
   board: getFullBoard(state)
 }))(({ board }) => (
-  <div>
+  <Scroller>
     <div>
       <Row>
         <RowName>Close</RowName>
@@ -99,5 +105,5 @@ export default connect(state => ({
         <Score>{board.playerB.siege.score}</Score>
       </Row>
     </div>
-  </div>
+  </Scroller>
 ));

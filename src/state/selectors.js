@@ -16,6 +16,8 @@ export const getPlayerACloseScore = state => {
   return score(cards);
 };
 
+const isVisible = card => card.points !== null && card.points !== undefined;
+
 export const getFullBoard = state => {
   const playerACards = state.cards.filter(c => c.player === 'a' || !c.player);
   const playerBCards = state.cards.filter(c => c.player === 'b' || !c.player);
@@ -31,29 +33,29 @@ export const getFullBoard = state => {
   return {
     playerA: {
       close: {
-        cards: playerACloseCards,
+        cards: playerACloseCards.filter(isVisible),
         score: score(playerACloseCards)
       },
       ranged: {
-        cards: playerARangedCards,
+        cards: playerARangedCards.filter(isVisible),
         score: score(playerARangedCards)
       },
       siege: {
-        cards: playerASiegeCards,
+        cards: playerASiegeCards.filter(isVisible),
         score: score(playerASiegeCards)
       }
     },
     playerB: {
       close: {
-        cards: playerBCloseCards,
+        cards: playerBCloseCards.filter(isVisible),
         score: score(playerBCloseCards)
       },
       ranged: {
-        cards: playerBRangedCards,
+        cards: playerBRangedCards.filter(isVisible),
         score: score(playerBRangedCards)
       },
       siege: {
-        cards: playerBSiegeCards,
+        cards: playerBSiegeCards.filter(isVisible),
         score: score(playerBSiegeCards)
       }
     }

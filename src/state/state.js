@@ -28,7 +28,7 @@ export default {
       hero: false,
       points: null,
       attrs: null,
-      combat: null,
+      combat: 'close',
       special: 'biting-frost'
     },
     {

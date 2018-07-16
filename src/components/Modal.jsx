@@ -23,6 +23,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
       <div>
         Select player
         <select name="player" value={values.player} onChange={handleChange}>
+          <option />
           <option value="a">Player A</option>
           <option value="b">Player B</option>
         </select>
@@ -51,6 +52,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
       <div>
         Select combat
         <select name="combat" value={values.combat} onChange={handleChange}>
+          <option />
           <option value="close">Close</option>
           <option value="ranged">Ranged</option>
           <option value="siege">Siege</option>
@@ -60,9 +62,11 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
       <div>
         Select Attr
         <select name="attr" value={values.attr} onChange={handleChange}>
-          <option value="none">None</option>
+          <option />
           <option value="muster">Muster</option>
-          <option value="moral-boost">Morale Boost</option>
+          <option value="morale-boost">Morale Boost</option>
+          <option value="commander-horn">Commander Horn</option>
+          <option value="medic">Medic</option>
         </select>
       </div>
 
@@ -111,7 +115,7 @@ export default connect(
       <div>
         <Overlay />
         <Dialog>
-          <TheForm points={5} onCancel={onCancel} onAddCard={onAddCard} />
+          <TheForm onCancel={onCancel} onAddCard={onAddCard} />
         </Dialog>
       </div>
     ) : null

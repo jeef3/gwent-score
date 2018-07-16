@@ -8,6 +8,7 @@ import Board from './components/Board';
 import Modal from './components/Modal';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
+import ScoreBar from './components/ScoreBar';
 import { saga, reducer } from './state';
 
 const composeEnhancers = composeWithDevTools({ name: 'Client' });
@@ -22,18 +23,8 @@ const App = () => (
   <Provider store={store}>
     <div>
       <PageLayout>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
-          <div>Haley</div>
-          <div>Jeff</div>
-        </div>
-
+        <ScoreBar />
         <Board />
-
         <TabBar />
       </PageLayout>
 

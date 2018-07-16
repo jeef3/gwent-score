@@ -61,3 +61,31 @@ export const getFullBoard = state => {
     }
   };
 };
+
+export const getPlayerAScore = state => {
+  const playerACards = state.cards.filter(c => c.player === 'a' || !c.player);
+
+  const playerACloseCards = playerACards.filter(c => c.combat === 'close');
+  const playerARangedCards = playerACards.filter(c => c.combat === 'ranged');
+  const playerASiegeCards = playerACards.filter(c => c.combat === 'siege');
+
+  return (
+    score(playerACloseCards) +
+    score(playerARangedCards) +
+    score(playerASiegeCards)
+  );
+};
+
+export const getPlayerBScore = state => {
+  const playerBCards = state.cards.filter(c => c.player === 'b' || !c.player);
+
+  const playerBCloseCards = playerBCards.filter(c => c.combat === 'close');
+  const playerBRangedCards = playerBCards.filter(c => c.combat === 'ranged');
+  const playerBSiegeCards = playerBCards.filter(c => c.combat === 'siege');
+
+  return (
+    score(playerBCloseCards) +
+    score(playerBRangedCards) +
+    score(playerBSiegeCards)
+  );
+};

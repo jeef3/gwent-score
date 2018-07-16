@@ -52,11 +52,11 @@ export default connect(state => ({
   <Scroller>
     <div>
       <Row>
-        <RowName>Close</RowName>
+        <RowName>Siege</RowName>
         <CombatRow>
-          {board.playerA.close.cards.map(c => <Card key={c.id} {...c} />)}
+          {board.playerA.siege.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
-        <Score style={{ gridArea: 'score' }}>{board.playerA.close.score}</Score>
+        <Score>{board.playerA.siege.score}</Score>
       </Row>
       <Row>
         <RowName>Ranged</RowName>
@@ -66,13 +66,14 @@ export default connect(state => ({
         <Score>{board.playerA.ranged.score}</Score>
       </Row>
       <Row>
-        <RowName>Siege</RowName>
+        <RowName>Close</RowName>
         <CombatRow>
-          {board.playerA.siege.cards.map(c => <Card key={c.id} {...c} />)}
+          {board.playerA.close.cards.map(c => <Card key={c.id} {...c} />)}
         </CombatRow>
-        <Score>{board.playerA.siege.score}</Score>
+        <Score style={{ gridArea: 'score' }}>{board.playerA.close.score}</Score>
       </Row>
     </div>
+    <hr />
     <div>
       <Row>
         <RowName>Close</RowName>

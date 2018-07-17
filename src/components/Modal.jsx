@@ -42,7 +42,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           flexDirection: 'column'
         }}
       >
-        <label htmlFor="player">
+        <label>
           Select player
           <select name="player" value={values.player} onChange={handleChange}>
             <option />
@@ -51,7 +51,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           </select>
         </label>
 
-        <label htmlFor="points">
+        <label>
           Select points
           <input
             type="number"
@@ -61,7 +61,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           />
         </label>
 
-        <label htmlFor="hero">
+        <label>
           Hero?
           <input
             type="checkbox"
@@ -71,7 +71,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           />
         </label>
 
-        <label htmlFor="combat">
+        <label>
           Select combat
           <select name="combat" value={values.combat} onChange={handleChange}>
             <option />
@@ -82,7 +82,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           </select>
         </label>
 
-        <label htmlFor="attr">
+        <label>
           Select Attr
           <select name="attr" value={values.attr} onChange={handleChange}>
             <option />
@@ -91,6 +91,18 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
             <option value="commander-horn">Commander Horn</option>
             <option value="medic">Medic</option>
             <option value="spy">Spy</option>
+          </select>
+        </label>
+
+        <label>
+          Select Special
+          <select name="special" value={values.special} onChange={handleChange}>
+            <option />
+            <option value="scorch">Scorch</option>
+            <option value="clear-weather">Clear Weather</option>
+            <option value="weather">Biting Frost</option>
+            <option value="weather">Impenetrable Frost</option>
+            <option value="weather">Torrential Rain</option>
           </select>
         </label>
       </div>

@@ -130,7 +130,8 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
 );
 
 const TheForm = withFormik({
-  mapPropsToValues: ({ player, points, combat, attr, onCancel }) => ({
+  mapPropsToValues: ({ id, player, points, combat, attr, onCancel }) => ({
+    id,
     player,
     hero: false,
     points: points || 0,
@@ -139,24 +140,34 @@ const TheForm = withFormik({
     onCancel
   }),
   validate: () => true,
-  handleSubmit: (values, { props: { onAddCard } }) => {
-    onAddCard(values);
+  handleSubmit: (values, { props: { onAddCard, onEditCard } }) => {
+    if (values.id) {
+      onEditCard(values);
+    } else {
+      onAddCard(values);
+    }
   }
 })(InnerForm);
 
 export default connect(
-  state => ({ showModal: state.showModal }),
+  state => ({ showModal: state.showModal, data: state.dialogData }),
   dispatch => ({
     onCancel: () => dispatch(Actions.closeModal()),
-    onAddCard: card => dispatch(Actions.addCard({ card }))
+    onAddCard: card => dispatch(Actions.addCard({ card })),
+    onEditCard: card => dispatch(Actions.editCard({ card }))
   })
 )(
-  ({ showModal, onCancel, onAddCard }) =>
+  ({ showModal, data, onCancel, onAddCard, onEditCard }) =>
     showModal ? (
       <div>
         <Overlay />
         <Dialog>
-          <TheForm onCancel={onCancel} onAddCard={onAddCard} />
+          <TheForm
+            {...data}
+            onCancel={onCancel}
+            onAddCard={onAddCard}
+            onEditCard={onEditCard}
+          />
         </Dialog>
       </div>
     ) : null

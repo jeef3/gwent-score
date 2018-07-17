@@ -5,6 +5,7 @@ import { withFormik } from 'formik';
 
 import { Actions } from '../state';
 import Button from './atoms/Button';
+import PointRingButton from './atoms/PointRingButton';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
 
@@ -15,20 +16,6 @@ const DialogLayout = styled.div`
   grid-template-rows: 40px 1fr 40px;
 `;
 DialogLayout.displayName = 'DialogLayout';
-
-const BUtton = styled.button`
-  flex: 1;
-
-  margin: 0;
-
-  color: white;
-  font-size: inherit;
-
-  border: 0;
-
-  background: transparent;
-`;
-Button.displayName = 'Button';
 
 const InnerForm = ({ values, handleChange, handleSubmit }) => (
   <form style={{ display: 'contents' }} onSubmit={handleSubmit}>
@@ -52,11 +39,25 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           </select>
         </label>
 
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <PointRingButton
+            hero={values.hero}
+            faction="northern-realms"
+            onClick={() => {
+              console.log('toggle');
+            }}
+          >
+            {values.points}
+          </PointRingButton>
+        </div>
+
         <label>
           Select points
           <input
             type="number"
             name="points"
+            min="0"
+            max="15"
             value={values.points}
             onChange={handleChange}
           />
@@ -92,6 +93,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
             <option value="commander-horn">Commander Horn</option>
             <option value="medic">Medic</option>
             <option value="spy">Spy</option>
+            <option value="tight-bond">Tight Bond</option>
             <option value="scorch">Scorch</option>
           </select>
         </label>
@@ -117,14 +119,8 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           flexDirection: 'row-reverse'
         }}
       >
-        <Button style={{ background: '#009B6D' }} type="submit">
-          Add Card
-        </Button>
-        <Button
-          style={{ background: '#BD1D1D' }}
-          type="button"
-          onClick={values.onCancel}
-        >
+        <Button type="submit">Add Card</Button>
+        <Button style={{ background: '#BD1D1D' }} onClick={values.onCancel}>
           Cancel
         </Button>
       </div>

@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { withFormik } from 'formik';
 
 import { Actions } from '../state';
+import plus from '../assets/icons/plus.svg';
+import minus from '../assets/icons/minus.svg';
 import Button from './atoms/Button';
 import PointRingButton from './atoms/PointRingButton';
 import Dialog from './Dialog';
@@ -17,7 +19,29 @@ const DialogLayout = styled.div`
 `;
 DialogLayout.displayName = 'DialogLayout';
 
-const InnerForm = ({ values, handleChange, handleSubmit }) => (
+const PointChangeButton = styled.button`
+  width: 70px;
+  height: 70px;
+
+  user-select: none;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  appearance: none;
+
+  :active {
+    background: rgba(0, 0, 255, 0.1);
+
+    transform: translate3d(0, 1px, 0);
+  }
+`;
+PointChangeButton.displayName = 'PointChangeButton';
+
+const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
   <form style={{ display: 'contents' }} onSubmit={handleSubmit}>
     <DialogLayout>
       <h2 style={{ margin: 0, alignSelf: 'center', textAlign: 'center' }}>
@@ -39,39 +63,38 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           </select>
         </label>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            justifyItems: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <PointChangeButton
+            type="button"
+            onClick={() =>
+              setFieldValue('points', Math.max(values.points - 1, 0))
+            }
+          >
+            <img width="30" src={minus} />
+          </PointChangeButton>
           <PointRingButton
             hero={values.hero}
             faction="northern-realms"
-            onClick={() => {
-              console.log('toggle');
-            }}
+            onClick={() => setFieldValue('hero', !values.hero)}
           >
             {values.points}
           </PointRingButton>
+          <PointChangeButton
+            type="button"
+            onClick={() =>
+              setFieldValue('points', Math.min(values.points + 1, 15))
+            }
+          >
+            <img width="30" src={plus} />
+          </PointChangeButton>
         </div>
-
-        <label>
-          Select points
-          <input
-            type="number"
-            name="points"
-            min="0"
-            max="15"
-            value={values.points}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-          Hero?
-          <input
-            type="checkbox"
-            name="hero"
-            checked={values.hero}
-            onChange={handleChange}
-          />
-        </label>
 
         <label>
           Select combat

@@ -21,25 +21,24 @@ const PointRingButton = styled.div.attrs({
   role: 'button',
   tabIndex: -1
 })`
-  width: 100px;
-  height: 100px;
-
-  font-family: Gwent;
-  font-size: 45px;
+  width: 120px;
+  height: 120px;
 
   cursor: pointer;
   user-select: none;
 
   color: ${({ hero }) => (hero ? 'white' : 'black')};
+  font-family: Gwent, sans-serif;
+  font-size: 54px;
 
   background-image: url(${getImageUrl});
-  background-size: 100px;
+  background-size: 120px;
   background-repeat: no-repeat;
   background-position: center;
 
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
 
-  display: flex
+  display: flex;
   align-items: center;
   justify-content: center;
 `;

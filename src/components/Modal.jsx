@@ -71,7 +71,7 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
               setFieldValue('points', Math.max(values.points - 1, 0))
             }
           >
-            <img width="30" src={minus} />
+            <img width="30" src={minus} alt="minus" />
           </PointChangeButton>
           <PointRingButton
             hero={values.hero}
@@ -86,7 +86,7 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
               setFieldValue('points', Math.min(values.points + 1, 15))
             }
           >
-            <img width="30" src={plus} />
+            <img width="30" src={plus} alt="plus" />
           </PointChangeButton>
         </div>
 

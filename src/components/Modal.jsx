@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { withFormik } from 'formik';
 
 import { Actions } from '../state';
+import Button from './atoms/Button';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
 
@@ -15,7 +16,7 @@ const DialogLayout = styled.div`
 `;
 DialogLayout.displayName = 'DialogLayout';
 
-const Button = styled.button`
+const BUtton = styled.button`
   flex: 1;
 
   margin: 0;
@@ -91,6 +92,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
             <option value="commander-horn">Commander Horn</option>
             <option value="medic">Medic</option>
             <option value="spy">Spy</option>
+            <option value="scorch">Scorch</option>
           </select>
         </label>
 
@@ -103,6 +105,7 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
             <option value="weather">Biting Frost</option>
             <option value="weather">Impenetrable Frost</option>
             <option value="weather">Torrential Rain</option>
+            <option value="commander-horn">Commander Horn</option>
           </select>
         </label>
       </div>
@@ -114,11 +117,11 @@ const InnerForm = ({ values, handleChange, handleSubmit }) => (
           flexDirection: 'row-reverse'
         }}
       >
-        <Button style={{ background: 'green' }} type="submit">
+        <Button style={{ background: '#009B6D' }} type="submit">
           Add Card
         </Button>
         <Button
-          style={{ background: 'red' }}
+          style={{ background: '#BD1D1D' }}
           type="button"
           onClick={values.onCancel}
         >

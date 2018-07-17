@@ -32,12 +32,6 @@ const PointChangeButton = styled.button`
   background: transparent;
 
   appearance: none;
-
-  :active {
-    background: rgba(0, 0, 255, 0.1);
-
-    transform: translate3d(0, 1px, 0);
-  }
 `;
 PointChangeButton.displayName = 'PointChangeButton';
 

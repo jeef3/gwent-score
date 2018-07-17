@@ -5,6 +5,7 @@
   "rules": {
     "prettier/prettier": "error",
     "react/prop-types": false,
-    "react/jsx-one-expression-per-line": false
+    "react/jsx-one-expression-per-line": false,
+    "jsx-a11y/label-has-for": false
   }
 }

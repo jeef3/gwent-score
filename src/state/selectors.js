@@ -1,4 +1,4 @@
-import score from '../score';
+import { calcScore, sum } from '../score';
 
 export const getPlayerAClose = state =>
   state.cards.filter(card => card.player === 'a' && card.combat === 'close');
@@ -13,7 +13,7 @@ export const getPlayerACloseScore = state => {
     .filter(card => !card.special)
     .filter(card => !card.hero);
 
-  return score(cards);
+  return sum(calcScore(cards));
 };
 
 const isVisible = card => card.points !== null && card.points !== undefined;
@@ -34,29 +34,29 @@ export const getFullBoard = state => {
     playerA: {
       close: {
         cards: playerACloseCards.filter(isVisible),
-        score: score(playerACloseCards)
+        score: sum(calcScore(playerACloseCards))
       },
       ranged: {
         cards: playerARangedCards.filter(isVisible),
-        score: score(playerARangedCards)
+        score: sum(calcScore(playerARangedCards))
       },
       siege: {
         cards: playerASiegeCards.filter(isVisible),
-        score: score(playerASiegeCards)
+        score: sum(calcScore(playerASiegeCards))
       }
     },
     playerB: {
       close: {
         cards: playerBCloseCards.filter(isVisible),
-        score: score(playerBCloseCards)
+        score: sum(calcScore(playerBCloseCards))
       },
       ranged: {
         cards: playerBRangedCards.filter(isVisible),
-        score: score(playerBRangedCards)
+        score: sum(calcScore(playerBRangedCards))
       },
       siege: {
         cards: playerBSiegeCards.filter(isVisible),
-        score: score(playerBSiegeCards)
+        score: sum(calcScore(playerBSiegeCards))
       }
     }
   };
@@ -65,27 +65,11 @@ export const getFullBoard = state => {
 export const getPlayerAScore = state => {
   const playerACards = state.cards.filter(c => c.player === 'a' || !c.player);
 
-  const playerACloseCards = playerACards.filter(c => c.combat === 'close');
-  const playerARangedCards = playerACards.filter(c => c.combat === 'ranged');
-  const playerASiegeCards = playerACards.filter(c => c.combat === 'siege');
-
-  return (
-    score(playerACloseCards) +
-    score(playerARangedCards) +
-    score(playerASiegeCards)
-  );
+  return sum(calcScore(playerACards));
 };
 
 export const getPlayerBScore = state => {
   const playerBCards = state.cards.filter(c => c.player === 'b' || !c.player);
 
-  const playerBCloseCards = playerBCards.filter(c => c.combat === 'close');
-  const playerBRangedCards = playerBCards.filter(c => c.combat === 'ranged');
-  const playerBSiegeCards = playerBCards.filter(c => c.combat === 'siege');
-
-  return (
-    score(playerBCloseCards) +
-    score(playerBRangedCards) +
-    score(playerBSiegeCards)
-  );
+  return sum(calcScore(playerBCards));
 };

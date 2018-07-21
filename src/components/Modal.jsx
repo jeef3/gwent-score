@@ -146,10 +146,10 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
 );
 
 const TheForm = withFormik({
-  mapPropsToValues: ({ id, player, points, combat, attr, onCancel }) => ({
+  mapPropsToValues: ({ id, player, hero, points, combat, attr, onCancel }) => ({
     id,
     player,
-    hero: false,
+    hero,
     points: points || 0,
     combat,
     attr,

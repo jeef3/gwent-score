@@ -13,9 +13,10 @@ const Container = styled.div`
 `;
 Container.displayName = 'Card_Container';
 
-export default ({ points, attrs, onClick = () => {} }) => (
+export default ({ points, score, attrs, onClick = () => {} }) => (
   <Container onClick={onClick}>
-    <div>{points}</div>
+    <div style={{ fontSize: 18, color: 'green' }}>{score}</div>
+    <div style={{ fontSize: 11, color: 'gray' }}>{points}</div>
     <div>{attrs}</div>
   </Container>
 );

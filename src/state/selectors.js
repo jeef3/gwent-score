@@ -22,41 +22,53 @@ export const getFullBoard = state => {
   const playerACards = state.cards.filter(c => c.player === 'a' || !c.player);
   const playerBCards = state.cards.filter(c => c.player === 'b' || !c.player);
 
-  const playerACloseCards = playerACards.filter(c => c.combat === 'close');
-  const playerARangedCards = playerACards.filter(c => c.combat === 'ranged');
-  const playerASiegeCards = playerACards.filter(c => c.combat === 'siege');
+  const playerACloseCards = calcScore(
+    playerACards.filter(c => c.combat === 'close')
+  );
+  const playerARangedCards = calcScore(
+    playerACards.filter(c => c.combat === 'ranged')
+  );
+  const playerASiegeCards = calcScore(
+    playerACards.filter(c => c.combat === 'siege')
+  );
 
-  const playerBCloseCards = playerBCards.filter(c => c.combat === 'close');
-  const playerBRangedCards = playerBCards.filter(c => c.combat === 'ranged');
-  const playerBSiegeCards = playerBCards.filter(c => c.combat === 'siege');
+  const playerBCloseCards = calcScore(
+    playerBCards.filter(c => c.combat === 'close')
+  );
+  const playerBRangedCards = calcScore(
+    playerBCards.filter(c => c.combat === 'ranged')
+  );
+  const playerBSiegeCards = calcScore(
+    playerBCards.filter(c => c.combat === 'siege')
+  );
 
   return {
     playerA: {
       close: {
         cards: playerACloseCards.filter(isVisible),
-        score: sum(calcScore(playerACloseCards))
+        score: sum(playerACloseCards)
       },
       ranged: {
         cards: playerARangedCards.filter(isVisible),
-        score: sum(calcScore(playerARangedCards))
+        score: sum(playerARangedCards)
       },
       siege: {
         cards: playerASiegeCards.filter(isVisible),
-        score: sum(calcScore(playerASiegeCards))
+        score: sum(playerASiegeCards)
       }
     },
     playerB: {
       close: {
         cards: playerBCloseCards.filter(isVisible),
-        score: sum(calcScore(playerBCloseCards))
+        score: sum(playerBCloseCards)
       },
       ranged: {
         cards: playerBRangedCards.filter(isVisible),
-        score: sum(calcScore(playerBRangedCards))
+        score: sum(playerBRangedCards)
       },
       siege: {
         cards: playerBSiegeCards.filter(isVisible),
-        score: sum(calcScore(playerBSiegeCards))
+        score: sum(playerBSiegeCards)
       }
     }
   };

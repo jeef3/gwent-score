@@ -14,8 +14,8 @@ const Row = styled.div`
   grid-template-columns: 1fr 50px;
   grid-template-rows: 50px 1fr;
   grid-template-areas:
-    'name name'
-    'cards score';
+    'name name name'
+    'cards score add';
 `;
 Row.displayName = 'Row';
 
@@ -32,6 +32,12 @@ const CombatRow = styled.div`
   grid-area: cards;
 `;
 CombatRow.displayName = 'CombatRow';
+
+const Add = styled.button`
+  cursor: pointer;
+  grid-area: add;
+`;
+Add.displayName = 'Add';
 
 const Score = styled.h2`
   margin: 0;
@@ -63,6 +69,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score>{board.playerA.siege.score}</Score>
       </Row>
       <Row>
@@ -72,6 +79,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score>{board.playerA.ranged.score}</Score>
       </Row>
       <Row>
@@ -81,6 +89,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score style={{ gridArea: 'score' }}>{board.playerA.close.score}</Score>
       </Row>
     </div>
@@ -93,6 +102,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score>{board.playerB.close.score}</Score>
       </Row>
       <Row>
@@ -102,6 +112,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score>{board.playerB.ranged.score}</Score>
       </Row>
       <Row>
@@ -111,6 +122,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
+        <Add>+</Add>
         <Score>{board.playerB.siege.score}</Score>
       </Row>
     </div>

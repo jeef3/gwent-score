@@ -1,11 +1,13 @@
 const noop = card => card;
 
+const prepScore = card => ({ ...card, score: card.points });
+
 const resetToOne = card =>
-  card.special || card.hero || card.points === 0
+  card.special || card.hero || card.score === 0
     ? card
     : {
         ...card,
-        points: 1
+        score: 1
       };
 
 const boostMorale = (p, card, i, cards) => {
@@ -19,7 +21,7 @@ const boostMorale = (p, card, i, cards) => {
     boostCount = 0;
   }
 
-  return p.concat({ ...card, points: card.points + boostCount });
+  return p.concat({ ...card, score: card.score + boostCount });
 };
 
 const tightlyBond = (p, card, i, cards) => {
@@ -32,7 +34,7 @@ const tightlyBond = (p, card, i, cards) => {
     c => c.attr === 'tight-bond' && c.link === bondId
   ).length;
 
-  return p.concat({ ...card, points: card.points * tightlyBoundCount });
+  return p.concat({ ...card, score: card.score * tightlyBoundCount });
 };
 
 const blowCommanderHorn = (p, card, i, cards) => {
@@ -57,16 +59,18 @@ const blowCommanderHorn = (p, card, i, cards) => {
     return p.concat(card);
   }
 
-  return p.concat({ ...card, points: card.points * 2 });
+  return p.concat({ ...card, score: card.score * 2 });
 };
 
-export default cards => {
+export const calcScore = cards => {
   const hasWeather = !!cards.find(card => card.special === 'weather');
 
   return cards
+    .map(prepScore)
     .map(hasWeather ? resetToOne : noop)
-    .reduce(boostMorale, [])
     .reduce(tightlyBond, [])
-    .reduce(blowCommanderHorn, [])
-    .reduce((p, card) => p + (card.points || 0), 0);
+    .reduce(boostMorale, [])
+    .reduce(blowCommanderHorn, []);
 };
+
+export const sum = cards => cards.reduce((p, card) => p + (card.score || 0), 0);

@@ -11,7 +11,7 @@ const Row = styled.div`
   border: solid 1px lightgray;
 
   display: grid;
-  grid-template-columns: 1fr 50px;
+  grid-template-columns: 1fr 50px 50px;
   grid-template-rows: 50px 1fr;
   grid-template-areas:
     'name name name'
@@ -57,9 +57,25 @@ export default connect(
     board: Selector.getFullBoard(state)
   }),
   dispatch => ({
-    onCardClick: card => dispatch(Actions.editUnit({ card }))
+    onCardClick: card => dispatch(Actions.editUnit({ card })),
+    playerA: {
+      onPlaySiege: () =>
+        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'siege' } })),
+      onPlayRanged: () =>
+        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'ranged' } })),
+      onPlayClose: () =>
+        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'close' } }))
+    },
+    playerB: {
+      onPlayClose: () =>
+        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'close' } })),
+      onPlayRanged: () =>
+        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'ranged' } })),
+      onPlaySiege: () =>
+        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'siege' } }))
+    }
   })
-)(({ board, onCardClick }) => (
+)(({ board, onCardClick, playerA, playerB }) => (
   <Scroller>
     <div>
       <Row>
@@ -69,7 +85,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerA.onPlaySiege}>+</Add>
         <Score>{board.playerA.siege.score}</Score>
       </Row>
       <Row>
@@ -79,7 +95,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerA.onPlayRanged}>+</Add>
         <Score>{board.playerA.ranged.score}</Score>
       </Row>
       <Row>
@@ -89,7 +105,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerA.onPlayClose}>+</Add>
         <Score style={{ gridArea: 'score' }}>{board.playerA.close.score}</Score>
       </Row>
     </div>
@@ -102,7 +118,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerB.onPlayClose}>+</Add>
         <Score>{board.playerB.close.score}</Score>
       </Row>
       <Row>
@@ -112,7 +128,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerB.onPlayRanged}>+</Add>
         <Score>{board.playerB.ranged.score}</Score>
       </Row>
       <Row>
@@ -122,7 +138,7 @@ export default connect(
             <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
           ))}
         </CombatRow>
-        <Add>+</Add>
+        <Add onClick={playerB.onPlaySiege}>+</Add>
         <Score>{board.playerB.siege.score}</Score>
       </Row>
     </div>

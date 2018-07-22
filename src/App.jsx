@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import Board from './components/Board';
-import Modal from './components/Modal';
+import DialogManager from './components/DialogManager';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import ScoreBar from './components/ScoreBar';
@@ -28,7 +28,7 @@ const App = () => (
         <TabBar />
       </PageLayout>
 
-      <Modal />
+      <DialogManager />
     </div>
   </Provider>
 );

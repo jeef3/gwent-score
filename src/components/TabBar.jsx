@@ -7,10 +7,9 @@ export default connect(
   null,
   dispatch => ({
     onPlayLeader: () => dispatch(Actions.playLeader()),
-    onPlayUnit: () => dispatch(Actions.playUnit()),
-    onPlaySpecial: () => dispatch(Actions.playSpecial())
+    onPlayWeather: () => dispatch(Actions.playWeather())
   })
-)(({ onPlayLeader, onPlayUnit, onPlaySpecial }) => (
+)(({ onPlayLeader, onPlayWeather }) => (
   <div
     style={{
       display: 'flex',
@@ -22,11 +21,8 @@ export default connect(
     <button type="button" onClick={onPlayLeader}>
       Play Leader
     </button>
-    <button type="button" onClick={onPlayUnit}>
-      Play Unit
-    </button>
-    <button type="button" onClick={onPlaySpecial}>
-      Play Special
+    <button type="button" onClick={onPlayWeather}>
+      Play Weather
     </button>
   </div>
 ));

@@ -16,6 +16,8 @@ const Container = styled.div`
 Container.displayName = 'Container';
 
 const Row = styled.div`
+  position: relative;
+
   background-image: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.2),
@@ -62,7 +64,7 @@ const Add = styled.button`
   padding: 13px;
 
   cursor: pointer;
-  color: white;
+  color: rgba(255, 255, 255, 0.3);
 
   border: 0;
 
@@ -121,9 +123,9 @@ export default connect(
     <Container>
       <div>
         <Row>
+          <CombatRowBackground combat="siege" />
           <RowName>Siege</RowName>
           <CombatRow>
-            <CombatRowBackground combat="siege" />
             {board.playerA.siege.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}
@@ -134,9 +136,9 @@ export default connect(
           <Score>{board.playerA.siege.score}</Score>
         </Row>
         <Row>
+          <CombatRowBackground combat="ranged" />
           <RowName>Ranged</RowName>
           <CombatRow>
-            <CombatRowBackground combat="ranged" />
             {board.playerA.ranged.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}
@@ -147,9 +149,9 @@ export default connect(
           <Score>{board.playerA.ranged.score}</Score>
         </Row>
         <Row>
+          <CombatRowBackground combat="close" />
           <RowName>Close</RowName>
           <CombatRow>
-            <CombatRowBackground combat="close" />
             {board.playerA.close.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}
@@ -165,9 +167,9 @@ export default connect(
       <hr />
       <div>
         <Row>
+          <CombatRowBackground combat="close" />
           <RowName>Close</RowName>
           <CombatRow>
-            <CombatRowBackground combat="close" />
             {board.playerB.close.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}
@@ -178,9 +180,9 @@ export default connect(
           <Score>{board.playerB.close.score}</Score>
         </Row>
         <Row>
+          <CombatRowBackground combat="ranged" />
           <RowName>Ranged</RowName>
           <CombatRow>
-            <CombatRowBackground combat="ranged" />
             {board.playerB.ranged.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}
@@ -191,9 +193,9 @@ export default connect(
           <Score>{board.playerB.ranged.score}</Score>
         </Row>
         <Row>
+          <CombatRowBackground combat="siege" />
           <RowName>Siege</RowName>
           <CombatRow>
-            <CombatRowBackground combat="siege" />
             {board.playerB.siege.cards.map(c => (
               <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
             ))}

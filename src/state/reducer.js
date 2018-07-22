@@ -28,7 +28,11 @@ export const StateActions = {
     return {
       cards: newCards
     };
-  })
+  }),
+
+  cardRemoved: createReducerAction('→ CARD_REMOVED', (state, action) => ({
+    cards: state.cards.filter(card => card.id !== action.payload.card.id)
+  }))
 };
 
 export default (state = initialState, action) => {

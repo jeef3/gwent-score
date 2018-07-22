@@ -12,7 +12,8 @@ export default connect(state => ({
       alignSelf: 'center',
       padding: '0 10px',
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      fontSize: 20
     }}
   >
     <div>

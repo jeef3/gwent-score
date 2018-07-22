@@ -127,6 +127,12 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
             <option value="commander-horn">Commander Horn</option>
           </select>
         </label>
+
+        {values.id && (
+          <button type="button" onClick={() => values.onRemoveCard(values)}>
+            Remove Card
+          </button>
+        )}
       </div>
 
       <div
@@ -146,13 +152,23 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
 );
 
 const TheForm = withFormik({
-  mapPropsToValues: ({ id, player, hero, points, combat, attr, onCancel }) => ({
+  mapPropsToValues: ({
+    id,
+    player,
+    hero,
+    points,
+    combat,
+    attr,
+    onRemoveCard,
+    onCancel
+  }) => ({
     id,
     player,
     hero,
     points: points || 0,
     combat,
     attr,
+    onRemoveCard,
     onCancel
   }),
   validate: () => true,
@@ -166,25 +182,24 @@ const TheForm = withFormik({
 })(InnerForm);
 
 export default connect(
-  state => ({ showModal: state.showModal, data: state.dialogData }),
+  null,
   dispatch => ({
+    onRemoveCard: card => dispatch(Actions.removeCard({ card })),
     onCancel: () => dispatch(Actions.closeModal()),
     onAddCard: card => dispatch(Actions.addCard({ card })),
     onEditCard: card => dispatch(Actions.editCard({ card }))
   })
-)(
-  ({ showModal, data, onCancel, onAddCard, onEditCard }) =>
-    showModal ? (
-      <div>
-        <Overlay />
-        <Dialog>
-          <TheForm
-            {...data}
-            onCancel={onCancel}
-            onAddCard={onAddCard}
-            onEditCard={onEditCard}
-          />
-        </Dialog>
-      </div>
-    ) : null
-);
+)(({ card, onRemoveCard, onCancel, onAddCard, onEditCard }) => (
+  <React.Fragment>
+    <Overlay />
+    <Dialog>
+      <TheForm
+        {...card}
+        onRemoveCard={onRemoveCard}
+        onCancel={onCancel}
+        onAddCard={onAddCard}
+        onEditCard={onEditCard}
+      />
+    </Dialog>
+  </React.Fragment>
+));

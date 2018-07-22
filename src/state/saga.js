@@ -9,7 +9,7 @@ export function* handlePlayUnit(action) {
     payload: { card }
   } = action;
 
-  yield put(StateActions.modalShown({ data: card }));
+  yield put(StateActions.modalShown({ dialog: 'unit', data: card }));
 }
 
 export function* handleEditUnit(action) {
@@ -17,7 +17,11 @@ export function* handleEditUnit(action) {
     payload: { card }
   } = action;
 
-  yield put(StateActions.modalShown({ data: card }));
+  yield put(StateActions.modalShown({ dialog: 'unit', data: card }));
+}
+
+export function* handlePlayWeather() {
+  yield put(StateActions.modalShown({ dialog: 'weather', data: {} }));
 }
 
 export function* handleCloseModal() {
@@ -55,6 +59,7 @@ export function* handleRemoveCard(action) {
 export function* saga() {
   yield takeEvery(Actions.playUnit.type, handlePlayUnit);
   yield takeEvery(Actions.editUnit.type, handleEditUnit);
+  yield takeEvery(Actions.playWeather.type, handlePlayWeather);
   yield takeEvery(Actions.closeModal.type, handleCloseModal);
 
   yield takeEvery(Actions.addCard.type, handleAddCard);

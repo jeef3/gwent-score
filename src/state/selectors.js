@@ -75,13 +75,13 @@ export const getFullBoard = state => {
 };
 
 export const getPlayerAScore = state => {
-  const playerACards = state.cards.filter(c => c.player === 'a' || !c.player);
+  const { playerA } = getFullBoard(state);
 
-  return sum(calcScore(playerACards));
+  return playerA.close.score + playerA.ranged.score + playerA.siege.score;
 };
 
 export const getPlayerBScore = state => {
-  const playerBCards = state.cards.filter(c => c.player === 'b' || !c.player);
+  const { playerB } = getFullBoard(state);
 
-  return sum(calcScore(playerBCards));
+  return playerB.close.score + playerB.ranged.score + playerB.siege.score;
 };

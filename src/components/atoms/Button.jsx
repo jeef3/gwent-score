@@ -7,6 +7,7 @@ const Button = styled.button.attrs({
 
   margin: 0;
 
+  cursor: pointer;
   color: white;
   font: inherit;
   font-weight: 600;

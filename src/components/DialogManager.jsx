@@ -9,7 +9,7 @@ const renderDialog = (dialog, dialogData) => {
     case 'unit':
       return <UnitDialog card={dialogData} />;
     case 'weather':
-      return <WeatherDialog />;
+      return <WeatherDialog card={dialogData} />;
     default:
       return <div />;
   }

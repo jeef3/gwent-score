@@ -12,5 +12,8 @@ export default {
   editCard: createAction('EDIT_CARD'),
   removeCard: createAction('REMOVE_CARD'),
 
-  closeModal: createAction('CLOSE_MODAL')
+  closeModal: createAction('CLOSE_MODAL'),
+
+  clearWeather: createAction('CLEAR_WEATHER'),
+  scorch: createAction('SCORCH')
 };

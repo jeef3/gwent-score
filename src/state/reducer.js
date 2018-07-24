@@ -32,6 +32,10 @@ export const StateActions = {
 
   cardRemoved: createReducerAction('→ CARD_REMOVED', (state, action) => ({
     cards: state.cards.filter(card => card.id !== action.payload.card.id)
+  })),
+
+  clearWeather: createReducerAction('→ CLEAR_WEATHER', state => ({
+    cards: state.cards.filter(card => card.special !== 'weather')
   }))
 };
 

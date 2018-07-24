@@ -172,7 +172,10 @@ const TheForm = withFormik({
     if (values.card.combat === 'clear') {
       onClearWeather();
     } else {
-      onAddCard(values.card);
+      onAddCard({
+        combat: values.card.combat,
+        special: 'weather'
+      });
     }
   }
 })(InnerForm);
@@ -184,11 +187,16 @@ export default connect(
     onAddCard: card => dispatch(Actions.addCard({ card })),
     onClearWeather: () => dispatch(Actions.clearWeather())
   })
-)(({ card, onCancel, onAddCard }) => (
+)(({ card, onCancel, onAddCard, onClearWeather }) => (
   <React.Fragment>
     <Overlay />
     <Dialog>
-      <TheForm {...card} onCancel={onCancel} onAddCard={onAddCard} />
+      <TheForm
+        {...card}
+        onCancel={onCancel}
+        onAddCard={onAddCard}
+        onClearWeather={onClearWeather}
+      />
     </Dialog>
   </React.Fragment>
 ));

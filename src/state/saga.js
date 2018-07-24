@@ -56,6 +56,12 @@ export function* handleRemoveCard(action) {
   yield put(StateActions.modalHidden());
 }
 
+export function* handleClearWeather() {
+  console.log('handling clear weather');
+  yield put(StateActions.clearWeather());
+  yield put(StateActions.modalHidden());
+}
+
 export function* saga() {
   yield takeEvery(Actions.playUnit.type, handlePlayUnit);
   yield takeEvery(Actions.editUnit.type, handleEditUnit);
@@ -65,4 +71,6 @@ export function* saga() {
   yield takeEvery(Actions.addCard.type, handleAddCard);
   yield takeEvery(Actions.editCard.type, handleEditCard);
   yield takeEvery(Actions.removeCard.type, handleRemoveCard);
+
+  yield takeEvery(Actions.clearWeather.type, handleClearWeather);
 }

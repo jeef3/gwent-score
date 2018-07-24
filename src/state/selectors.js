@@ -85,3 +85,6 @@ export const getPlayerBScore = state => {
 
   return playerB.close.score + playerB.ranged.score + playerB.siege.score;
 };
+
+export const getActiveWeather = state =>
+  state.cards.filter(card => card.special === 'weather');

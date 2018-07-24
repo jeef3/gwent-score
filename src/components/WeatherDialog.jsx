@@ -6,10 +6,8 @@ import { withFormik } from 'formik';
 import { Actions } from '../state';
 import chevronLeft from '../assets/icons/chevron-left.svg';
 import chevronRight from '../assets/icons/chevron-right.svg';
-import SpecialBitingFrost from './atoms/icons/SpecialBitingFrost';
-import SpecialImpeneterableFog from './atoms/icons/SpecialImpenetrableFog';
-import SpecialTorrentialRain from './atoms/icons/SpecialTorrentialRain';
-import SpecialClearWeather from './atoms/icons/SpecialClearWeather';
+import WEATHER_CARDS from '../weatherCards';
+import SpecialIcon from './atoms/SpecialIcon';
 import SpecialButton from './atoms/SpecialButton';
 import Button from './atoms/Button';
 import Dialog from './Dialog';
@@ -39,30 +37,6 @@ const PointChangeButton = styled.button`
 `;
 PointChangeButton.displayName = 'PointChangeButton';
 
-const WEATHER_CARDS = [
-  {
-    combat: 'close',
-    title: 'Biting Frost',
-    quote: 'Best part about frost — bodies of the fallen don’t rot so quickly.'
-  },
-  {
-    combat: 'ranged',
-    title: 'Impeneterable Fog',
-    quote: 'A good commander’s dream... a bad one’s horror.'
-  },
-  {
-    combat: 'siege',
-    title: 'Torrential Rain',
-    quote: 'Even the rain in this land smells like piss.'
-  },
-  {
-    combat: 'clear',
-    title: 'Clear Weather',
-    quote:
-      'The sun’s shinin’, Dromle! The sun’s shinin’! Maybe there’s hope left after all...'
-  }
-];
-
 const getNextWeather = current => {
   const idx = WEATHER_CARDS.findIndex(card => card.combat === current.combat);
 
@@ -73,20 +47,6 @@ const getPreviousWeather = current => {
   const idx = WEATHER_CARDS.findIndex(card => card.combat === current.combat);
 
   return WEATHER_CARDS[idx === 0 ? WEATHER_CARDS.length - 1 : idx - 1];
-};
-
-const renderWeather = card => {
-  switch (card.combat) {
-    case 'close':
-      return <SpecialBitingFrost />;
-    case 'ranged':
-      return <SpecialImpeneterableFog />;
-    case 'siege':
-      return <SpecialTorrentialRain />;
-    case 'clear':
-    default:
-      return <SpecialClearWeather />;
-  }
 };
 
 const InnerForm = ({ values, handleSubmit, setFieldValue }) => (
@@ -123,7 +83,7 @@ const InnerForm = ({ values, handleSubmit, setFieldValue }) => (
             faction="northern-realms"
             onClick={() => setFieldValue('hero', !values.hero)}
           >
-            {renderWeather(values.card)}
+            <SpecialIcon name={values.card.name} />
           </SpecialButton>
           <PointChangeButton
             type="button"
@@ -169,7 +129,7 @@ const TheForm = withFormik({
   }),
   validate: () => true,
   handleSubmit: (values, { props: { onAddCard, onClearWeather } }) => {
-    if (values.card.combat === 'clear') {
+    if (values.card.name === 'clear-weather') {
       onClearWeather();
     } else {
       onAddCard({

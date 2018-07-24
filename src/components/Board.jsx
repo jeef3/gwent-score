@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 import { Actions, Selector } from '../state';
 import woodTexture from '../assets/cherry4.jpg';
+import WEATHER_CARDS from '../weatherCards';
 import CombatRowBackground from './molecules/CombatRowBackground';
+import SpecialIcon from './atoms/SpecialIcon';
 import Plus from './atoms/icons/Plus';
 import Card from './Card';
 
@@ -95,9 +97,41 @@ const Scroller = styled.div`
 `;
 Scroller.displayName = 'Scroller';
 
+const WeatherCards = styled.div`
+  box-sizing: border-box;
+  height: 60px;
+  padding: 5px 0;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 5%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 0.7)
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+WeatherCards.displayName = 'WeatherCards';
+
+const WeatherCard = styled.div`
+  width: 40px;
+  height: 40px;
+
+  color: white;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.1);
+`;
+WeatherCard.displayName = 'WeatherCard';
+
 export default connect(
   state => ({
-    board: Selector.getFullBoard(state)
+    board: Selector.getFullBoard(state),
+    weather: Selector.getActiveWeather(state)
   }),
   dispatch => ({
     onCardClick: card => dispatch(Actions.editUnit({ card })),
@@ -118,7 +152,7 @@ export default connect(
         dispatch(Actions.playUnit({ card: { player: 'b', combat: 'siege' } }))
     }
   })
-)(({ board, onCardClick, playerA, playerB }) => (
+)(({ board, weather, onCardClick, playerA, playerB }) => (
   <Scroller>
     <Container>
       <div>
@@ -164,7 +198,16 @@ export default connect(
           </Score>
         </Row>
       </div>
-      <hr />
+
+      <WeatherCards>
+        {weather.map(card => (
+          <WeatherCard key={card.id}>
+            <SpecialIcon
+              name={WEATHER_CARDS.find(c => c.combat === card.combat).name}
+            />
+          </WeatherCard>
+        ))}
+      </WeatherCards>
       <div>
         <Row>
           <CombatRowBackground combat="close" />

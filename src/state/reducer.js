@@ -36,6 +36,10 @@ export const StateActions = {
 
   clearWeather: createReducerAction('→ CLEAR_WEATHER', state => ({
     cards: state.cards.filter(card => card.special !== 'weather')
+  })),
+
+  restart: createReducerAction('→ RESTART', () => ({
+    cards: []
   }))
 };
 

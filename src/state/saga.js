@@ -57,9 +57,12 @@ export function* handleRemoveCard(action) {
 }
 
 export function* handleClearWeather() {
-  console.log('handling clear weather');
   yield put(StateActions.clearWeather());
   yield put(StateActions.modalHidden());
+}
+
+export function* handleRestart() {
+  yield put(StateActions.restart());
 }
 
 export function* saga() {
@@ -73,4 +76,6 @@ export function* saga() {
   yield takeEvery(Actions.removeCard.type, handleRemoveCard);
 
   yield takeEvery(Actions.clearWeather.type, handleClearWeather);
+
+  yield takeEvery(Actions.restart.type, handleRestart);
 }

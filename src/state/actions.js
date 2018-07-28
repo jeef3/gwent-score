@@ -15,5 +15,7 @@ export default {
   closeModal: createAction('CLOSE_MODAL'),
 
   clearWeather: createAction('CLEAR_WEATHER'),
-  scorch: createAction('SCORCH')
+  scorch: createAction('SCORCH'),
+
+  restart: createAction('RESTART')
 };

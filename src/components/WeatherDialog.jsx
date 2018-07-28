@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { withFormik } from 'formik';
 
 import { Actions } from '../state';
-import chevronLeft from '../assets/icons/chevron-left.svg';
-import chevronRight from '../assets/icons/chevron-right.svg';
 import WEATHER_CARDS from '../weatherCards';
+import ItemSelect from './molecules/ItemSelect';
 import SpecialIcon from './atoms/SpecialIcon';
 import SpecialButton from './atoms/SpecialButton';
 import Button from './atoms/Button';
@@ -37,18 +36,6 @@ const PointChangeButton = styled.button`
 `;
 PointChangeButton.displayName = 'PointChangeButton';
 
-const getNextWeather = current => {
-  const idx = WEATHER_CARDS.findIndex(card => card.combat === current.combat);
-
-  return WEATHER_CARDS[idx === WEATHER_CARDS.length - 1 ? 0 : idx + 1];
-};
-
-const getPreviousWeather = current => {
-  const idx = WEATHER_CARDS.findIndex(card => card.combat === current.combat);
-
-  return WEATHER_CARDS[idx === 0 ? WEATHER_CARDS.length - 1 : idx - 1];
-};
-
 const InnerForm = ({ values, handleSubmit, setFieldValue }) => (
   <form style={{ display: 'contents' }} onSubmit={handleSubmit}>
     <DialogLayout>
@@ -62,36 +49,19 @@ const InnerForm = ({ values, handleSubmit, setFieldValue }) => (
           flexDirection: 'column'
         }}
       >
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            justifyItems: 'center',
-            alignItems: 'center'
+        <ItemSelect
+          value={values.card}
+          items={WEATHER_CARDS}
+          renderValue={() => (
+            <SpecialButton hero={false} faction="northern-realms">
+              <SpecialIcon name={values.card.name} />
+            </SpecialButton>
+          )}
+          onChange={value => {
+            setFieldValue('card', value);
           }}
-        >
-          <PointChangeButton
-            type="button"
-            onClick={() =>
-              setFieldValue('card', getPreviousWeather(values.card))
-            }
-          >
-            <img width="30" src={chevronLeft} alt="left" />
-          </PointChangeButton>
-          <SpecialButton
-            hero={values.hero}
-            faction="northern-realms"
-            onClick={() => setFieldValue('hero', !values.hero)}
-          >
-            <SpecialIcon name={values.card.name} />
-          </SpecialButton>
-          <PointChangeButton
-            type="button"
-            onClick={() => setFieldValue('card', getNextWeather(values.card))}
-          >
-            <img width="30" src={chevronRight} alt="right" />
-          </PointChangeButton>
-        </div>
+        />
+
         <span
           style={{
             fontFamily: 'Gwent',

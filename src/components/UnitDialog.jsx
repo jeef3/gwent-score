@@ -8,6 +8,9 @@ import plus from '../assets/icons/plus.svg';
 import minus from '../assets/icons/minus.svg';
 import Button from './atoms/Button';
 import PointRingButton from './atoms/PointRingButton';
+import SpecialButton from './atoms/SpecialButton';
+import AttrIcon from './atoms/AttrIcon';
+import ItemSelect from './molecules/ItemSelect';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
 
@@ -100,19 +103,27 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           </select>
         </label>
 
-        <label>
-          Select Attr
-          <select name="attr" value={values.attr} onChange={handleChange}>
-            <option />
-            <option value="muster">Muster</option>
-            <option value="morale-boost">Morale Boost</option>
-            <option value="commander-horn">Commander Horn</option>
-            <option value="medic">Medic</option>
-            <option value="spy">Spy</option>
-            <option value="tight-bond">Tight Bond</option>
-            <option value="scorch">Scorch</option>
-          </select>
-        </label>
+        <ItemSelect
+          items={[
+            '',
+            'muster',
+            'morale-boost',
+            'commander-horn',
+            'medic',
+            'spy',
+            'tight-bond',
+            'scorch'
+          ]}
+          value={values.attr}
+          renderValue={() => (
+            <SpecialButton hero={false} faction="northern-realms">
+              <AttrIcon name={values.attr} />
+            </SpecialButton>
+          )}
+          onChange={value => {
+            setFieldValue('attr', value);
+          }}
+        />
 
         {values.id && (
           <button type="button" onClick={() => values.onRemoveCard(values)}>

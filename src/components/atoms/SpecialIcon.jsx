@@ -1,12 +1,11 @@
 import React from 'react';
 
 import SpecialBitingFrost from './icons/SpecialBitingFrost';
-import SpecialImpeneterableFog from './icons/SpecialImpenetrableFog';
+import SpecialImpeneterableFog from './icons/SpecialImpeneterableFog';
 import SpecialTorrentialRain from './icons/SpecialTorrentialRain';
 import SpecialClearWeather from './icons/SpecialClearWeather';
 
 const getWeather = name => {
-  console.log('getting for', name);
   switch (name) {
     case 'biting-frost':
       return <SpecialBitingFrost />;

@@ -10,6 +10,7 @@ import Button from './atoms/Button';
 import PointRingButton from './atoms/PointRingButton';
 import SpecialButton from './atoms/SpecialButton';
 import AttrIcon from './atoms/AttrIcon';
+import CombatIcon from './atoms/CombatIcon';
 import ItemSelect from './molecules/ItemSelect';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
@@ -93,15 +94,18 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           </PointChangeButton>
         </div>
 
-        <label>
-          Select combat
-          <select name="combat" value={values.combat} onChange={handleChange}>
-            <option />
-            <option value="close">Close</option>
-            <option value="ranged">Ranged</option>
-            <option value="siege">Siege</option>
-          </select>
-        </label>
+        <ItemSelect
+          items={['close', 'ranged', 'siege']}
+          value={values.combat}
+          renderValue={() => (
+            <SpecialButton hero={false} faction="northern-realms">
+              <CombatIcon name={values.combat} />
+            </SpecialButton>
+          )}
+          onChange={value => {
+            setFieldValue('combat', value);
+          }}
+        />
 
         <ItemSelect
           items={[

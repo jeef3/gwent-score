@@ -97,7 +97,6 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
             <option value="close">Close</option>
             <option value="ranged">Ranged</option>
             <option value="siege">Siege</option>
-            <option value="special">Special</option>
           </select>
         </label>
 
@@ -112,19 +111,6 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
             <option value="spy">Spy</option>
             <option value="tight-bond">Tight Bond</option>
             <option value="scorch">Scorch</option>
-          </select>
-        </label>
-
-        <label>
-          Select Special
-          <select name="special" value={values.special} onChange={handleChange}>
-            <option />
-            <option value="scorch">Scorch</option>
-            <option value="clear-weather">Clear Weather</option>
-            <option value="weather">Biting Frost</option>
-            <option value="weather">Impenetrable Frost</option>
-            <option value="weather">Torrential Rain</option>
-            <option value="commander-horn">Commander Horn</option>
           </select>
         </label>
 

@@ -7,7 +7,7 @@ import { Actions } from '../state';
 import WEATHER_CARDS from '../weatherCards';
 import ItemSelect from './molecules/ItemSelect';
 import SpecialIcon from './atoms/SpecialIcon';
-import SpecialButton from './atoms/SpecialButton';
+import SpecialRing from './atoms/SpecialRing';
 import Button from './atoms/Button';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
@@ -53,9 +53,9 @@ const InnerForm = ({ values, handleSubmit, setFieldValue }) => (
           value={values.card}
           items={WEATHER_CARDS}
           renderValue={() => (
-            <SpecialButton hero={false} faction="northern-realms">
+            <SpecialRing hero={false} faction="northern-realms">
               <SpecialIcon name={values.card.name} />
-            </SpecialButton>
+            </SpecialRing>
           )}
           onChange={value => {
             setFieldValue('card', value);

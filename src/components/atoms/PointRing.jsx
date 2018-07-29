@@ -17,10 +17,7 @@ const IMAGE_URLS = {
 const getImageUrl = ({ hero, faction }) =>
   IMAGE_URLS[faction][hero ? 'hero' : 'unit'];
 
-const PointRingButton = styled.div.attrs({
-  role: 'button',
-  tabIndex: -1
-})`
+const PointRing = styled.div`
   width: 120px;
   height: 120px;
 
@@ -42,6 +39,6 @@ const PointRingButton = styled.div.attrs({
   align-items: center;
   justify-content: center;
 `;
-PointRingButton.displayName = 'PointRingButton';
+PointRing.displayName = 'PointRing';
 
-export default PointRingButton;
+export default PointRing;

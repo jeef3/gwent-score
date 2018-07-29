@@ -6,11 +6,12 @@ import { withFormik } from 'formik';
 import { Actions } from '../state';
 import plus from '../assets/icons/plus.svg';
 import minus from '../assets/icons/minus.svg';
-import Button from './atoms/Button';
-import PointRingButton from './atoms/PointRingButton';
-import SpecialButton from './atoms/SpecialButton';
 import AttrIcon from './atoms/AttrIcon';
+import AttrRing from './atoms/AttrRing';
+import Button from './atoms/Button';
 import CombatIcon from './atoms/CombatIcon';
+import CombatRing from './atoms/CombatRing';
+import PointRing from './atoms/PointRing';
 import ItemSelect from './molecules/ItemSelect';
 import Dialog from './Dialog';
 import Overlay from './Overaly';
@@ -61,46 +62,34 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           </select>
         </label>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            justifyItems: 'center',
-            alignItems: 'center'
+        <ItemSelect
+          downButton={minus}
+          upButton={plus}
+          items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+          value={values.points}
+          renderValue={() => (
+            <PointRing
+              role="button"
+              tabIndex={-1}
+              hero={values.hero}
+              faction="northern-realms"
+              onClick={() => setFieldValue('hero', !values.hero)}
+            >
+              {values.points}
+            </PointRing>
+          )}
+          onChange={value => {
+            setFieldValue('points', value);
           }}
-        >
-          <PointChangeButton
-            type="button"
-            onClick={() =>
-              setFieldValue('points', Math.max(values.points - 1, 0))
-            }
-          >
-            <img width="30" src={minus} alt="minus" />
-          </PointChangeButton>
-          <PointRingButton
-            hero={values.hero}
-            faction="northern-realms"
-            onClick={() => setFieldValue('hero', !values.hero)}
-          >
-            {values.points}
-          </PointRingButton>
-          <PointChangeButton
-            type="button"
-            onClick={() =>
-              setFieldValue('points', Math.min(values.points + 1, 15))
-            }
-          >
-            <img width="30" src={plus} alt="plus" />
-          </PointChangeButton>
-        </div>
+        />
 
         <ItemSelect
           items={['close', 'ranged', 'siege']}
           value={values.combat}
           renderValue={() => (
-            <SpecialButton hero={false} faction="northern-realms">
+            <CombatRing hero={false} faction="northern-realms">
               <CombatIcon name={values.combat} />
-            </SpecialButton>
+            </CombatRing>
           )}
           onChange={value => {
             setFieldValue('combat', value);
@@ -120,9 +109,9 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           ]}
           value={values.attr}
           renderValue={() => (
-            <SpecialButton hero={false} faction="northern-realms">
+            <AttrRing faction="northern-realms">
               <AttrIcon name={values.attr} />
-            </SpecialButton>
+            </AttrRing>
           )}
           onChange={value => {
             setFieldValue('attr', value);
@@ -143,7 +132,7 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           flexDirection: 'row-reverse'
         }}
       >
-        <Button type="submit">Add Card</Button>
+        <Button type="submit">{values.id ? 'Update Card' : 'Add Card'}</Button>
         <Button style={{ background: '#BD1D1D' }} onClick={values.onCancel}>
           Cancel
         </Button>

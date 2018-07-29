@@ -8,16 +8,11 @@ const IMAGE_URLS = {
 
 const getImageUrl = ({ faction }) => IMAGE_URLS[faction];
 
-const SpecialButton = styled.div.attrs({
-  role: 'button',
-  tabIndex: -1
-})`
+const SpecialRing = styled.div`
   box-sizing: border-box;
-  width: 100px;
-  height: 100px;
-  padding: 14px;
-
-  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  padding: 22px;
 
   background-image: url(${getImageUrl});
   background-size: 120px;
@@ -26,6 +21,6 @@ const SpecialButton = styled.div.attrs({
 
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
 `;
-SpecialButton.displayName = 'SpecialButton';
+SpecialRing.displayName = 'SpecialRing';
 
-export default SpecialButton;
+export default SpecialRing;

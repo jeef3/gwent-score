@@ -11,9 +11,15 @@ import Plus from './atoms/icons/Plus';
 import Card from './Card';
 
 const Container = styled.div`
+  min-height: 100%;
+
   background-image: url(${woodTexture});
   background-size: cover;
   background-repeat: no-repeat;
+
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-areas: 'playerA', 'weather', 'playerB';
 `;
 Container.displayName = 'Container';
 
@@ -31,9 +37,7 @@ const Row = styled.div`
   display: grid;
   grid-template-columns: 1fr 50px 50px;
   grid-template-rows: 50px 1fr;
-  grid-template-areas:
-    'name score add'
-    'cards cards cards';
+  grid-template-areas: 'cards score add' 'cards unset unset';
 `;
 Row.displayName = 'Row';
 
@@ -47,6 +51,8 @@ const RowName = styled.h2`
 
   grid-area: name;
   align-self: center;
+
+  display: none;
 `;
 RowName.displayName = 'RowName';
 
@@ -97,10 +103,14 @@ const Scroller = styled.div`
 `;
 Scroller.displayName = 'Scroller';
 
+const PlayerBoard = styled.div`
+  display: grid;
+`;
+PlayerBoard.displayName = 'PlayerBoard';
+
 const WeatherCards = styled.div`
   box-sizing: border-box;
   height: 60px;
-  padding: 5px 0;
 
   background-image: linear-gradient(
     to bottom,
@@ -155,7 +165,7 @@ export default connect(
 )(({ board, weather, onCardClick, playerA, playerB }) => (
   <Scroller>
     <Container>
-      <div>
+      <PlayerBoard>
         <Row>
           <CombatRowBackground combat="siege" />
           <RowName>Siege</RowName>
@@ -197,7 +207,7 @@ export default connect(
             {board.playerA.close.score}
           </Score>
         </Row>
-      </div>
+      </PlayerBoard>
 
       <WeatherCards>
         {weather.map(card => (
@@ -208,7 +218,7 @@ export default connect(
           </WeatherCard>
         ))}
       </WeatherCards>
-      <div>
+      <PlayerBoard>
         <Row>
           <CombatRowBackground combat="close" />
           <RowName>Close</RowName>
@@ -248,7 +258,7 @@ export default connect(
           </Add>
           <Score>{board.playerB.siege.score}</Score>
         </Row>
-      </div>
+      </PlayerBoard>
     </Container>
   </Scroller>
 ));

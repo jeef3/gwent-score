@@ -8,9 +8,10 @@ export default connect(
   dispatch => ({
     onPlayLeader: () => dispatch(Actions.playLeader()),
     onRestart: () => dispatch(Actions.restart()),
-    onPlayWeather: () => dispatch(Actions.playWeather())
+    onPlayWeather: () => dispatch(Actions.playWeather()),
+    onScorch: () => dispatch(Actions.scorch())
   })
-)(({ onPlayLeader, onRestart, onPlayWeather }) => (
+)(({ onPlayLeader, onRestart, onPlayWeather, onScorch }) => (
   <div
     style={{
       display: 'flex',
@@ -24,6 +25,9 @@ export default connect(
     </button>
     <button type="button" onClick={onRestart}>
       Restart
+    </button>
+    <button type="button" onClick={onScorch}>
+      Scorch
     </button>
     <button type="button" onClick={onPlayWeather}>
       Play Weather

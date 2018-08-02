@@ -88,3 +88,14 @@ export const getPlayerBScore = state => {
 
 export const getActiveWeather = state =>
   state.cards.filter(card => card.special === 'weather');
+
+export const getScores = state => ({
+  playerA: {
+    name: state.players.playerA.name,
+    score: getPlayerAScore(state)
+  },
+  playerB: {
+    name: state.players.playerB.name,
+    score: getPlayerBScore(state)
+  }
+});

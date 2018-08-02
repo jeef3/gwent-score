@@ -3,5 +3,14 @@ export default {
   dialog: null,
   dialogData: null,
 
-  cards: []
+  cards: [],
+
+  players: {
+    playerA: {
+      name: 'Haley'
+    },
+    playerB: {
+      name: 'Jeff'
+    }
+  }
 };

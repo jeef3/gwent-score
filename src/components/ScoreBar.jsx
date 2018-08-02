@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { Selector } from '../state';
 
 export default connect(state => ({
-  playerAScore: Selector.getPlayerAScore(state),
-  playerBScore: Selector.getPlayerBScore(state)
-}))(({ playerAScore, playerBScore }) => (
+  players: Selector.getScores(state)
+}))(({ players: { playerA, playerB } }) => (
   <div
     style={{
       alignSelf: 'center',
@@ -17,10 +16,10 @@ export default connect(state => ({
     }}
   >
     <div>
-      Haley <strong>{playerAScore}</strong>
+      {playerA.name} <strong>{playerA.score}</strong>
     </div>
     <div>
-      <strong>{playerBScore}</strong> Jeff
+      <strong>{playerB.score}</strong> {playerB.name}
     </div>
   </div>
 ));

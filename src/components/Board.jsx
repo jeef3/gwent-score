@@ -112,13 +112,12 @@ const WeatherCards = styled.div`
   box-sizing: border-box;
   height: 60px;
 
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0) 5%,
-    rgba(0, 0, 0, 0) 75%,
-    rgba(0, 0, 0, 0.7)
-  );
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0) 5%
+    ),
+    rgba(0, 0, 0, 0.3);
 
   display: flex;
   align-items: center;

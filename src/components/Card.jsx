@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import AttrIcon from './atoms/AttrIcon';
+
 const Container = styled.div`
   box-sizing: border-box;
   width: 40px;
@@ -17,20 +19,44 @@ const Container = styled.div`
 
   background: lightgray;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+  display: grid;
+  grid-template-areas: 'score score' 'attr point';
+
+  ${AttrIcon} svg {
+    display: block;
+  }
 `;
 Container.displayName = 'Card_Container';
 
-export default ({ hero, points, score, attrs, onClick = () => {} }) => (
+export default ({ hero, points, score, attr, onClick = () => {} }) => (
   <Container hero={hero} onClick={onClick}>
     {score === points ? (
-      <div style={{ fontSize: 18, color: 'black' }}>{score}</div>
+      <div style={{ fontSize: 18, color: 'black', gridArea: 'score' }}>
+        {score}
+      </div>
     ) : (
       <React.Fragment>
-        <div style={{ fontSize: 18, color: 'green' }}>{score}</div>
-        <div style={{ fontSize: 11, color: 'gray' }}>{points}</div>
+        <div style={{ fontSize: 18, color: 'green', gridArea: 'score' }}>
+          {score}
+        </div>
+        <div style={{ fontSize: 11, color: 'gray', gridArea: 'point' }}>
+          {points}
+        </div>
       </React.Fragment>
     )}
 
-    <div>{attrs}</div>
+    <div
+      style={{
+        width: 20,
+        height: 20,
+        gridArea:
+          score === points
+            ? 'attr / point / attr / attr'
+            : 'attr / attr / attr / attr'
+      }}
+    >
+      <AttrIcon name={attr} />
+    </div>
   </Container>
 );

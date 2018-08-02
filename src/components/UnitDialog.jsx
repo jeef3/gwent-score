@@ -155,7 +155,7 @@ const TheForm = withFormik({
     id,
     player,
     hero,
-    points: points || 5,
+    points: points === null || points === undefined ? 5 : points,
     combat,
     attr,
     onRemoveCard,

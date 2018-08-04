@@ -1,6 +1,8 @@
 import createReducerAction from './createReducerAction';
 import initialState from './state';
 
+import scorch from '../scorch';
+
 export const StateActions = {
   modalShown: createReducerAction('→ MODAL_SHOWN', (state, action) => ({
     showModal: true,
@@ -40,6 +42,10 @@ export const StateActions = {
 
   restart: createReducerAction('→ RESTART', () => ({
     cards: []
+  })),
+
+  scorch: createReducerAction('→ SCORCH', (state, action) => ({
+    cards: scorch(state.cards, action.payload.combat)
   }))
 };
 

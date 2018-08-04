@@ -4,6 +4,17 @@ it('should calc simple score', () => {
   expect(sum(calcScore([{ points: 5 }, { points: 5 }]))).toBe(10);
 });
 
+it('should ignore scorched cards', () => {
+  const cards = calcScore([
+    { points: 5 },
+    { points: 5 },
+    { points: 5, scorched: true }
+  ]);
+
+  expect(cards.length).toBe(3);
+  expect(sum(cards)).toBe(10);
+});
+
 it('should double score with Commander Horn', () => {
   const cards = calcScore([
     { points: 5 },

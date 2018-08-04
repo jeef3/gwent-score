@@ -17,7 +17,7 @@ const Container = styled.div`
   border: solid 2px ${({ hero }) => (hero ? '#CA863A' : 'transparent')};
   border-radius: 5px;
 
-  background: lightgray;
+  background: ${({ scorched }) => (scorched ? 'red' : 'lightgray')};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
   display: grid;
@@ -29,8 +29,15 @@ const Container = styled.div`
 `;
 Container.displayName = 'Card_Container';
 
-export default ({ hero, points, score, attr, onClick = () => {} }) => (
-  <Container hero={hero} onClick={onClick}>
+export default ({
+  hero,
+  points,
+  score,
+  attr,
+  scorched,
+  onClick = () => {}
+}) => (
+  <Container hero={hero} scorched={scorched} onClick={onClick}>
     {score === points ? (
       <div style={{ fontSize: 18, color: 'black', gridArea: 'score' }}>
         {score}

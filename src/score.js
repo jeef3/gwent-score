@@ -1,6 +1,7 @@
 const noop = card => card;
 
-const prepScore = card => ({ ...card, score: card.points });
+const prepScore = card =>
+  card.scorched ? { ...card, score: 0 } : { ...card, score: card.points };
 
 const resetToOne = card =>
   card.special || card.hero || card.score === 0

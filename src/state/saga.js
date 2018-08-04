@@ -65,6 +65,12 @@ export function* handleRestart() {
   yield put(StateActions.restart());
 }
 
+export function* handleScorch(action) {
+  const combat = action.payload ? action.payload.combat : undefined;
+
+  yield put(StateActions.scorch({ combat }));
+}
+
 export function* saga() {
   yield takeEvery(Actions.playUnit.type, handlePlayUnit);
   yield takeEvery(Actions.editUnit.type, handleEditUnit);
@@ -78,4 +84,6 @@ export function* saga() {
   yield takeEvery(Actions.clearWeather.type, handleClearWeather);
 
   yield takeEvery(Actions.restart.type, handleRestart);
+
+  yield takeEvery(Actions.scorch.type, handleScorch);
 }

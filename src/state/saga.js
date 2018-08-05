@@ -36,6 +36,15 @@ export function* handleAddCard(action) {
 
   yield put(StateActions.cardAdded({ card }));
   yield put(StateActions.modalHidden());
+
+  if (card.attr === 'scorch') {
+    yield put(
+      StateActions.scorch({
+        player: card.player === 'a' ? 'b' : 'a',
+        combat: card.combat
+      })
+    );
+  }
 }
 
 export function* handleEditCard(action) {
@@ -65,10 +74,9 @@ export function* handleRestart() {
   yield put(StateActions.restart());
 }
 
-export function* handleScorch(action) {
-  const combat = action.payload ? action.payload.combat : undefined;
-
-  yield put(StateActions.scorch({ combat }));
+export function* handleScorch() {
+  console.log('handleScorch');
+  yield put(StateActions.scorch());
 }
 
 export function* saga() {

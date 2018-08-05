@@ -45,7 +45,7 @@ export const StateActions = {
   })),
 
   scorch: createReducerAction('→ SCORCH', (state, action) => ({
-    cards: scorch(state.cards, action.payload.combat)
+    cards: scorch(state.cards, action.payload)
   }))
 };
 

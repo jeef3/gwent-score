@@ -29,6 +29,17 @@ it('should double score with Commander Horn', () => {
   expect(sum(cards)).toBe(20);
 });
 
+it('should not double scorched cards', () => {
+  const cards = calcScore([
+    { points: 5 },
+    { points: 5 },
+    { points: 5, scorched: true },
+    { special: 'commander-horn' }
+  ]);
+
+  expect(sum(cards)).toBe(20);
+});
+
 it('should not double heroes when Commander Horn is used', () => {
   const cards = calcScore([
     { points: 5 },
@@ -70,6 +81,18 @@ it('should handle multiple Dandelions', () => {
   ]);
 
   expect(sum(cards)).toBe(38);
+});
+
+it('should handle scorched Dandelions', () => {
+  const cards = calcScore([
+    { points: 2, attr: 'commander-horn' },
+    { points: 2, attr: 'commander-horn', scorched: true },
+    { points: 5 },
+    { points: 5 },
+    { points: 10, hero: true }
+  ]);
+
+  expect(sum(cards)).toBe(32);
 });
 
 it('should not double double if Dandelion is used with Commander Horn', () => {
@@ -127,6 +150,15 @@ it('should double Tight Bond if Commander Horn is present', () => {
   expect(sum(cards)).toBe(130);
 });
 
+it('should not tightly bond scorched', () => {
+  const cards = calcScore([
+    { points: 5, attr: 'tight-bond', link: 'f1' },
+    { points: 5, attr: 'tight-bond', link: 'f1' },
+    { points: 5, attr: 'tight-bond', link: 'f1', scorched: true }
+  ]);
+  expect(sum(cards)).toBe(20);
+});
+
 it('should reset points to 1 when weather is applied', () => {
   const cards = calcScore([
     { points: 5 },
@@ -147,6 +179,17 @@ it('should leave 0 pointers when weather is applied', () => {
     { special: 'weather' }
   ]);
   expect(sum(cards)).toBe(3);
+});
+
+it('should leave scorched when weather is applied', () => {
+  const cards = calcScore([
+    { points: 0 },
+    { points: 5 },
+    { points: 5 },
+    { points: 5, scorched: true },
+    { special: 'weather' }
+  ]);
+  expect(sum(cards)).toBe(2);
 });
 
 it('should apply weather first when Commander Horn is present', () => {
@@ -171,11 +214,35 @@ it('should +1 for Morale Boost', () => {
   expect(sum(cards)).toBe(22);
 });
 
+it('should not +1 for scorched Morale Boost', () => {
+  const cards = calcScore([
+    { points: 6 },
+    { points: 6 },
+    { points: 6 },
+    { points: 1, attr: 'morale-boost' },
+    { points: 1, attr: 'morale-boost', scorched: true }
+  ]);
+
+  expect(sum(cards)).toBe(22);
+});
+
 it('should not boost heroes', () => {
   const cards = calcScore([
     { points: 6 },
     { points: 6 },
     { points: 6 },
+    { points: 10, hero: true },
+    { points: 1, attr: 'morale-boost' }
+  ]);
+  expect(sum(cards)).toBe(32);
+});
+
+it('should not boost scorched', () => {
+  const cards = calcScore([
+    { points: 6 },
+    { points: 6 },
+    { points: 6 },
+    { points: 6, scorched: true },
     { points: 10, hero: true },
     { points: 1, attr: 'morale-boost' }
   ]);
@@ -236,7 +303,12 @@ it('should handle all the things', () => {
 
     { points: 2, attr: 'commander-horn' },
 
-    { special: 'commander-horn' }
+    { special: 'commander-horn' },
+
+    { points: 5, attr: 'tight-bond', link: 'f1', scorched: true },
+    { points: 2, attr: 'tight-bond', link: 'f2', scorched: true },
+    { points: 1, attr: 'morale-boost', scorched: true },
+    { points: 2, attr: 'commander-horn', scorched: true }
   ]);
 
   expect(cards[0].points).toBe(5);
@@ -289,7 +361,12 @@ it('should handle all the things in bad weather', () => {
 
     { special: 'commander-horn' },
 
-    { special: 'weather' }
+    { special: 'weather' },
+
+    { points: 5, attr: 'tight-bond', link: 'f1', scorched: true },
+    { points: 2, attr: 'tight-bond', link: 'f2', scorched: true },
+    { points: 1, attr: 'morale-boost', scorched: true },
+    { points: 2, attr: 'commander-horn', scorched: true }
   ]);
 
   expect(cards[0].points).toBe(5);

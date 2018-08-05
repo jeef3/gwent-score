@@ -8,8 +8,7 @@ export default {
       id: 1,
       player: 'a',
       points: 5,
-      combat: 'close',
-      scorched: true
+      combat: 'close'
     },
     {
       id: 2,
@@ -22,6 +21,20 @@ export default {
       player: 'a',
       points: 4,
       combat: 'close'
+    },
+    {
+      id: 4,
+      player: 'b',
+      points: 8,
+      combat: 'siege',
+      attr: 'tight-bond'
+    },
+    {
+      id: 5,
+      player: 'b',
+      points: 8,
+      combat: 'siege',
+      attr: 'tight-bond'
     }
   ],
 

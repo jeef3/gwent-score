@@ -4,7 +4,7 @@ const prepScore = card =>
   card.scorched ? { ...card, score: 0 } : { ...card, score: card.points };
 
 const resetToOne = card =>
-  card.special || card.hero || card.score === 0
+  card.special || card.hero || card.scorched || card.score === 0
     ? card
     : {
         ...card,
@@ -12,7 +12,13 @@ const resetToOne = card =>
       };
 
 const boostMorale = (p, card, i, cards) => {
-  let boostCount = cards.filter(c => c.attr === 'morale-boost').length;
+  if (card.scorched) {
+    return p.concat({ ...card });
+  }
+
+  let boostCount = cards
+    .filter(c => !c.scorched)
+    .filter(c => c.attr === 'morale-boost').length;
 
   if (card.attr === 'morale-boost') {
     boostCount -= 1;
@@ -26,14 +32,14 @@ const boostMorale = (p, card, i, cards) => {
 };
 
 const tightlyBond = (p, card, i, cards) => {
-  if (card.attr !== 'tight-bond') {
+  if (card.attr !== 'tight-bond' || card.scorched) {
     return p.concat(card);
   }
 
   const bondId = card.link;
-  const tightlyBoundCount = cards.filter(
-    c => c.attr === 'tight-bond' && c.link === bondId
-  ).length;
+  const tightlyBoundCount = cards
+    .filter(c => !c.scorched)
+    .filter(c => c.attr === 'tight-bond' && c.link === bondId).length;
 
   return p.concat({ ...card, score: card.score * tightlyBoundCount });
 };
@@ -41,6 +47,7 @@ const tightlyBond = (p, card, i, cards) => {
 const blowCommanderHorn = (p, card, i, cards) => {
   if (
     card.hero ||
+    card.scorched ||
     cards.filter(
       c => c.special === 'commander-horn' || c.attr === 'commander-horn'
     ).length === 0
@@ -52,6 +59,7 @@ const blowCommanderHorn = (p, card, i, cards) => {
   if (
     card.attr === 'commander-horn' &&
     cards
+      .filter(c => !c.scorched)
       .filter(c => c !== card)
       .filter(
         c => c.special === 'commander-horn' || c.attr === 'commander-horn'

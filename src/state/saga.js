@@ -75,7 +75,6 @@ export function* handleRestart() {
 }
 
 export function* handleScorch() {
-  console.log('handleScorch');
   yield put(StateActions.scorch());
 }
 

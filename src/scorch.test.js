@@ -16,24 +16,33 @@ it('should scorch the highest non-hero cards', () => {
   ]);
 });
 
-it('should apply score modifiers first', () => {
+it('should respect player and combat', () => {
   expect(
     scorch([
       { player: 'a', combat: 'close', id: 1, points: 8, attr: 'tight-bond' },
       { player: 'a', combat: 'close', id: 2, points: 8, attr: 'tight-bond' },
-      { player: 'a', combat: 'close', id: 4, points: 15, hero: true },
-      { player: 'a', combat: 'close', id: 6, points: 10 },
 
-      { player: 'b', combat: 'close', id: 7, points: 10 },
-      { player: 'b', combat: 'close', id: 8, points: 2, attr: 'commander-horn' }
+      { player: 'a', combat: 'ranged', id: 3, points: 10 },
+      {
+        player: 'a',
+        combat: 'ranged',
+        id: 4,
+        points: 2,
+        attr: 'commander-horn'
+      },
+
+      { player: 'b', combat: 'close', id: 5, points: 10 },
+      { player: 'b', combat: 'close', id: 6, points: 2, attr: 'commander-horn' }
     ])
   ).toEqual([
-    { id: 1, points: 0 },
-    { id: 2, points: 8, attr: 'tight-bond', scorched: true },
-    { id: 3, points: 10 },
-    { id: 4, points: 8, attr: 'tight-bond', scorched: true },
-    { id: 5, points: 15, hero: true },
-    { id: 6, points: 8, attr: 'tight-bond', scorched: true }
+    { player: 'a', combat: 'close', id: 1, points: 8, attr: 'tight-bond' },
+    { player: 'a', combat: 'close', id: 2, points: 8, attr: 'tight-bond' },
+
+    { player: 'a', combat: 'ranged', id: 3, points: 10, scorched: true },
+    { player: 'a', combat: 'ranged', id: 4, points: 2, attr: 'commander-horn' },
+
+    { player: 'b', combat: 'close', id: 5, points: 10, scorched: true },
+    { player: 'b', combat: 'close', id: 6, points: 2, attr: 'commander-horn' }
   ]);
 });
 

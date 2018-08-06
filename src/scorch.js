@@ -1,25 +1,32 @@
-import { sum, calcScore } from './score';
+import { calcScore } from './score';
 
 export default (cards, { player, combat } = {}) => {
-  const targetCards = calcScore(cards)
-    .filter(card => (combat ? card.combat === combat : true))
-    .filter(card => (player ? card.player === player : true));
+  const highestScoreReducer = (p, card) =>
+    !card.hero && card.score > p ? card.score : p;
 
-  if ((player || combat) && sum(targetCards) < 10) {
-    return cards;
-  }
+  const calcdRows = (player && combat
+    ? [c => c.player === player && c.combat === combat]
+    : [
+        c => c.player === 'a' && c.combat === 'siege',
+        c => c.player === 'a' && c.combat === 'ranged',
+        c => c.player === 'a' && c.combat === 'close',
+        c => c.player === 'b' && c.combat === 'close',
+        c => c.player === 'b' && c.combat === 'ranged',
+        c => c.player === 'b' && c.combat === 'siege'
+      ]
+  ).map(fn => calcScore(cards.filter(fn)));
 
-  const eligible = targetCards.filter(card => !card.hero);
+  const highestScore = calcdRows
+    .map(row => row.reduce(highestScoreReducer, 0))
+    .reduce((p, rowScore) => (rowScore > p ? rowScore : p), 0);
 
-  const highestScore = eligible.reduce(
-    (p, card) => (card.score > p ? card.score : p),
-    0
+  const idsToScorch = calcdRows.reduce(
+    (p, row) =>
+      p.concat(row.filter(c => c.score === highestScore).map(c => c.id)),
+    []
   );
 
-  const idsToScorch = eligible
-    .filter(card => !card.hero)
-    .filter(card => card.score === highestScore)
-    .map(card => card.id);
+  console.log('score:', highestScore, 'scorch', idsToScorch);
 
   return cards.map(
     card =>

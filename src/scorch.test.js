@@ -46,6 +46,117 @@ it('should respect player and combat', () => {
   ]);
 });
 
+it('should respect weather cards across combat rows and players', () => {
+  expect(
+    scorch([
+      { player: 'a', id: 1, points: 8, combat: 'ranged' },
+      { player: 'b', id: 2, points: 5, combat: 'close', attr: 'tight-bond' },
+      { player: 'b', id: 3, points: 5, combat: 'close', attr: 'tight-bond' },
+      { id: 4, combat: 'close', special: 'weather' }
+    ])
+  ).toEqual([
+    { player: 'a', id: 1, points: 8, combat: 'ranged', scorched: true },
+    { player: 'b', id: 2, points: 5, combat: 'close', attr: 'tight-bond' },
+    { player: 'b', id: 3, points: 5, combat: 'close', attr: 'tight-bond' },
+    { id: 4, combat: 'close', special: 'weather' }
+  ]);
+});
+
+it('should respect weather cards across combat rows', () => {
+  expect(
+    scorch([
+      { player: 'a', id: 1, points: 10, combat: 'ranged' },
+      { player: 'a', id: 2, points: 4, combat: 'close', attr: 'tight-bond' },
+      { player: 'a', id: 3, points: 4, combat: 'close', attr: 'tight-bond' },
+      { id: 4, combat: 'close', special: 'weather' }
+    ])
+  ).toEqual([
+    { player: 'a', id: 1, points: 10, combat: 'ranged' },
+    {
+      player: 'a',
+      id: 2,
+      points: 4,
+      combat: 'close',
+      attr: 'tight-bond',
+      scorched: true
+    },
+    {
+      player: 'a',
+      id: 3,
+      points: 4,
+      combat: 'close',
+      attr: 'tight-bond',
+      scorched: true
+    },
+    { id: 4, combat: 'close', special: 'weather' }
+  ]);
+});
+
+it('should respect weather cards when targeting a player and combat row', () => {
+  expect(
+    scorch(
+      [
+        { player: 'a', id: 1, points: 10, combat: 'close' },
+        { player: 'a', id: 2, points: 4, combat: 'close', attr: 'tight-bond' },
+        { player: 'a', id: 3, points: 4, combat: 'close', attr: 'tight-bond' },
+        { id: 4, combat: 'close', special: 'weather' }
+      ],
+      { player: 'b', combat: 'close' }
+    )
+  ).toEqual([
+    { player: 'a', id: 1, points: 10, combat: 'ranged' },
+    {
+      player: 'a',
+      id: 2,
+      points: 4,
+      combat: 'close',
+      attr: 'tight-bond',
+      scorched: true
+    },
+    {
+      player: 'a',
+      id: 3,
+      points: 4,
+      combat: 'close',
+      attr: 'tight-bond',
+      scorched: true
+    },
+    { id: 4, combat: 'close', special: 'weather' }
+  ]);
+});
+
+it('should respect all special and attrs', () => {
+  expect(
+    scorch([
+      { player: 'a', id: 1, points: 3, combat: 'close' },
+      {
+        player: 'a',
+        id: 2,
+        points: 2,
+        combat: 'close',
+        attr: 'commander-horn'
+      },
+      { player: 'b', id: 3, points: 5, combat: 'close' },
+      { player: 'b', id: 4, points: 5, combat: 'close', attr: 'tight-bond' },
+      { player: 'b', id: 5, points: 5, combat: 'close', attr: 'tight-bond' },
+      { id: 6, combat: 'close', special: 'weather' }
+    ])
+  ).toEqual([
+    { player: 'a', id: 1, points: 3, combat: 'close', scorched: true },
+    {
+      player: 'a',
+      id: 2,
+      points: 2,
+      combat: 'close',
+      attr: 'commander-horn'
+    },
+    { player: 'b', id: 3, points: 5, combat: 'close' },
+    { player: 'b', id: 4, points: 5, combat: 'close', attr: 'tight-bond' },
+    { player: 'b', id: 5, points: 5, combat: 'close', attr: 'tight-bond' },
+    { id: 6, combat: 'close', special: 'weather' }
+  ]);
+});
+
 it('should target a specific combat', () => {
   expect(
     scorch(

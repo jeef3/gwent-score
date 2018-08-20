@@ -1,27 +1,33 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { createStore, applyMiddleware } from 'redux';
+// import { Provider } from 'react-redux';
+// import createSagaMiddleware from 'redux-saga';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'mobx-react';
 
+import cardsStore from './stores/cardsStore';
 import Board from './components/Board';
 import DialogManager from './components/DialogManager';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import ScoreBar from './components/ScoreBar';
-import { saga, reducer } from './state';
+// import { saga, reducer } from './state';
 
-const composeEnhancers = composeWithDevTools({ name: 'Client' });
-const sagaMiddleware = createSagaMiddleware();
+// const composeEnhancers = composeWithDevTools({ name: 'Client' });
+// const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  reducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
-);
+// const store = createStore(
+//   reducer,
+//   composeEnhancers(applyMiddleware(sagaMiddleware))
+// );
+
+const stores = {
+  cardsStore
+};
 
 const App = () => (
-  <Provider store={store}>
-    <div>
+  <Provider {...stores}>
+    <React.Fragment>
       <PageLayout>
         <ScoreBar />
         <Board />
@@ -29,10 +35,10 @@ const App = () => (
       </PageLayout>
 
       <DialogManager />
-    </div>
+    </React.Fragment>
   </Provider>
 );
 
-sagaMiddleware.run(saga);
+// sagaMiddleware.run(saga);
 
 export default App;

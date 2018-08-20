@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "formik": "^1.0.1",
+    "mobx": "^5.0.3",
+    "mobx-react": "^5.2.5",
     "react": "^16.4.1",
+    "react-app-rewire-mobx": "^1.0.8",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
@@ -16,14 +19,14 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "lint": "eslint src/**/*.js*; stylelint src",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "lint": "eslint src/**/*.js*; stylelint src"
   },
   "devDependencies": {
     "@jeef3/stylelint-config-property-sort-order-nice": "^1.0.2",
+    "babel-eslint": "^8.2.6",
     "eslint": "^5.1.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^2.9.0",
@@ -32,6 +35,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
     "prettier": "^1.13.7",
+    "react-app-rewired": "^1.5.2",
     "stylelint": "^9.3.0",
     "stylelint-config-recommended": "^2.1.0",
     "stylelint-config-styled-components": "^0.1.1",

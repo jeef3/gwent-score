@@ -1,4 +1,5 @@
 import { observable, action, computed } from 'mobx';
+import uuid from 'uuid';
 
 export class CardsStore {
   @observable cardsRegistry = observable.map();
@@ -28,13 +29,21 @@ export class CardsStore {
   }
 
   @computed
-  get playerAScore() {}
+  get playerAScore() {
+    return 10;
+  }
 
   @computed
-  get playerBScore() {}
+  get playerBScore() {
+    return 20;
+  }
 
   @computed
-  get activeWeather() {}
+  get activeWeather() {
+    return this.cardsRegistry
+      .values()
+      .filter(card => card.special === 'weather');
+  }
 
   reset() {
     this.cardsRegistry.clear();
@@ -42,14 +51,16 @@ export class CardsStore {
 
   @action
   playCard(card) {
-    this.cardsRegistry.set('a', card);
+    this.cardsRegistry.set(uuid(), card);
   }
 
   @action
   clearWeather() {
-    const weatherCards = this.cardsRegistry.filter(
-      card => card.special === 'weather'
-    );
+    const weatherCards = this.cardsRegistry
+      .values()
+      .filter(card => card.special === 'weather');
+
+    weatherCards.forEach(card => this.cardsRegistry.delete(card.id));
   }
 }
 

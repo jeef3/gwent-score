@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import styled from 'styled-components';
 
-import { Actions, Selector } from '../state';
+// import { Actions, Selector } from '../state';
 import woodTexture from '../assets/cherry4.jpg';
 import WEATHER_CARDS from '../weatherCards';
 import CombatRowBackground from './molecules/CombatRowBackground';
@@ -137,127 +138,136 @@ const WeatherCard = styled.div`
 `;
 WeatherCard.displayName = 'WeatherCard';
 
-export default connect(
-  state => ({
-    board: Selector.getFullBoard(state),
-    weather: Selector.getActiveWeather(state)
-  }),
-  dispatch => ({
-    onCardClick: card => dispatch(Actions.editUnit({ card })),
-    playerA: {
-      onPlaySiege: () =>
-        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'siege' } })),
-      onPlayRanged: () =>
-        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'ranged' } })),
-      onPlayClose: () =>
-        dispatch(Actions.playUnit({ card: { player: 'a', combat: 'close' } }))
-    },
-    playerB: {
-      onPlayClose: () =>
-        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'close' } })),
-      onPlayRanged: () =>
-        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'ranged' } })),
-      onPlaySiege: () =>
-        dispatch(Actions.playUnit({ card: { player: 'b', combat: 'siege' } }))
-    }
-  })
-)(({ board, weather, onCardClick, playerA, playerB }) => (
-  <Scroller>
-    <Container>
-      <PlayerBoard>
-        <Row>
-          <CombatRowBackground combat="siege" />
-          <RowName>Siege</RowName>
-          <CombatRow>
-            {board.playerA.siege.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerA.onPlaySiege}>
-            <Plus />
-          </Add>
-          <Score>{board.playerA.siege.score}</Score>
-        </Row>
-        <Row>
-          <CombatRowBackground combat="ranged" />
-          <RowName>Ranged</RowName>
-          <CombatRow>
-            {board.playerA.ranged.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerA.onPlayRanged}>
-            <Plus />
-          </Add>
-          <Score>{board.playerA.ranged.score}</Score>
-        </Row>
-        <Row>
-          <CombatRowBackground combat="close" />
-          <RowName>Close</RowName>
-          <CombatRow>
-            {board.playerA.close.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerA.onPlayClose}>
-            <Plus />
-          </Add>
-          <Score style={{ gridArea: 'score' }}>
-            {board.playerA.close.score}
-          </Score>
-        </Row>
-      </PlayerBoard>
+// export default connect(
+//   state => ({
+//     board: Selector.getFullBoard(state),
+//     weather: Selector.getActiveWeather(state)
+//   }),
+//   dispatch => ({
+//     onCardClick: card => dispatch(Actions.editUnit({ card })),
+//     playerA: {
+//       onPlaySiege: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'a', combat: 'siege' } })),
+//       onPlayRanged: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'a', combat: 'ranged' } })),
+//       onPlayClose: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'a', combat: 'close' } }))
+//     },
+//     playerB: {
+//       onPlayClose: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'b', combat: 'close' } })),
+//       onPlayRanged: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'b', combat: 'ranged' } })),
+//       onPlaySiege: () =>
+//         dispatch(Actions.playUnit({ card: { player: 'b', combat: 'siege' } }))
+//     }
+//   })
+// )(({ board, weather, onCardClick, playerA, playerB }) => (
+const Board = inject('app', 'board', 'players')(
+  ({ app, board, players: { playerA, playerB } }) => (
+    <Scroller>
+      <Container>
+        <PlayerBoard>
+          <Row>
+            <CombatRowBackground combat="siege" />
+            <RowName>Siege</RowName>
+            <CombatRow>
+              {board.fullBoard.playerA.siege.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add
+              onClick={() =>
+                app.showUnitDialog({ player: 'a', combat: 'siege' })
+              }
+            >
+              <Plus />
+            </Add>
+            <Score>{board.fullBoard.playerA.siege.score}</Score>
+          </Row>
+          <Row>
+            <CombatRowBackground combat="ranged" />
+            <RowName>Ranged</RowName>
+            <CombatRow>
+              {board.fullBoard.playerA.ranged.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add onClick={playerA.onPlayRanged}>
+              <Plus />
+            </Add>
+            <Score>{board.fullBoard.playerA.ranged.score}</Score>
+          </Row>
+          <Row>
+            <CombatRowBackground combat="close" />
+            <RowName>Close</RowName>
+            <CombatRow>
+              {board.fullBoard.playerA.close.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add onClick={playerA.onPlayClose}>
+              <Plus />
+            </Add>
+            <Score style={{ gridArea: 'score' }}>
+              {board.fullBoard.playerA.close.score}
+            </Score>
+          </Row>
+        </PlayerBoard>
 
-      <WeatherCards>
-        {weather.map(card => (
-          <WeatherCard key={card.id}>
-            <SpecialIcon
-              name={WEATHER_CARDS.find(c => c.combat === card.combat).name}
-            />
-          </WeatherCard>
-        ))}
-      </WeatherCards>
-      <PlayerBoard>
-        <Row>
-          <CombatRowBackground combat="close" />
-          <RowName>Close</RowName>
-          <CombatRow>
-            {board.playerB.close.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerB.onPlayClose}>
-            <Plus />
-          </Add>
-          <Score>{board.playerB.close.score}</Score>
-        </Row>
-        <Row>
-          <CombatRowBackground combat="ranged" />
-          <RowName>Ranged</RowName>
-          <CombatRow>
-            {board.playerB.ranged.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerB.onPlayRanged}>
-            <Plus />
-          </Add>
-          <Score>{board.playerB.ranged.score}</Score>
-        </Row>
-        <Row>
-          <CombatRowBackground combat="siege" />
-          <RowName>Siege</RowName>
-          <CombatRow>
-            {board.playerB.siege.cards.map(c => (
-              <Card key={c.id} {...c} onClick={() => onCardClick(c)} />
-            ))}
-          </CombatRow>
-          <Add onClick={playerB.onPlaySiege}>
-            <Plus />
-          </Add>
-          <Score>{board.playerB.siege.score}</Score>
-        </Row>
-      </PlayerBoard>
-    </Container>
-  </Scroller>
-));
+        <WeatherCards>
+          {board.activeWeather.map(card => (
+            <WeatherCard key={card.id}>
+              <SpecialIcon
+                name={WEATHER_CARDS.find(c => c.combat === card.combat).name}
+              />
+            </WeatherCard>
+          ))}
+        </WeatherCards>
+        <PlayerBoard>
+          <Row>
+            <CombatRowBackground combat="close" />
+            <RowName>Close</RowName>
+            <CombatRow>
+              {board.fullBoard.playerB.close.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add onClick={playerB.onPlayClose}>
+              <Plus />
+            </Add>
+            <Score>{board.fullBoard.playerB.close.score}</Score>
+          </Row>
+          <Row>
+            <CombatRowBackground combat="ranged" />
+            <RowName>Ranged</RowName>
+            <CombatRow>
+              {board.fullBoard.playerB.ranged.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add onClick={playerB.onPlayRanged}>
+              <Plus />
+            </Add>
+            <Score>{board.fullBoard.playerB.ranged.score}</Score>
+          </Row>
+          <Row>
+            <CombatRowBackground combat="siege" />
+            <RowName>Siege</RowName>
+            <CombatRow>
+              {board.fullBoard.playerB.siege.cards.map(c => (
+                <Card key={c.id} {...c} onClick={() => app.showUnitDialog(c)} />
+              ))}
+            </CombatRow>
+            <Add onClick={playerB.onPlaySiege}>
+              <Plus />
+            </Add>
+            <Score>{board.fullBoard.playerB.siege.score}</Score>
+          </Row>
+        </PlayerBoard>
+      </Container>
+    </Scroller>
+  )
+);
+
+export default Board;

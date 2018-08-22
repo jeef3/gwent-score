@@ -1,20 +1,20 @@
 import { calcScore, sum } from '../score';
 
-export const getPlayerAClose = state =>
-  state.cards.filter(card => card.player === 'a' && card.combat === 'close');
+// export const getPlayerAClose = state =>
+//   state.cards.filter(card => card.player === 'a' && card.combat === 'close');
 
-export const getPlayerBClose = state =>
-  state.cards.filter(card => card.player === 'b' && card.combat === 'close');
+// export const getPlayerBClose = state =>
+//   state.cards.filter(card => card.player === 'b' && card.combat === 'close');
 
-export const getPlayerACloseScore = state => {
-  const cards = state.cards
-    .filter(card => card.player === 'a')
-    .filter(card => card.combat === 'close')
-    .filter(card => !card.special)
-    .filter(card => !card.hero);
+// export const getPlayerACloseScore = state => {
+//   const cards = state.cards
+//     .filter(card => card.player === 'a')
+//     .filter(card => card.combat === 'close')
+//     .filter(card => !card.special)
+//     .filter(card => !card.hero);
 
-  return sum(calcScore(cards));
-};
+//   return sum(calcScore(cards));
+// };
 
 const isVisible = card => card.points !== null && card.points !== undefined;
 
@@ -74,13 +74,13 @@ export const getFullBoard = state => {
   };
 };
 
-export const getPlayerAScore = state => {
+const getPlayerAScore = state => {
   const { playerA } = getFullBoard(state);
 
   return playerA.close.score + playerA.ranged.score + playerA.siege.score;
 };
 
-export const getPlayerBScore = state => {
+const getPlayerBScore = state => {
   const { playerB } = getFullBoard(state);
 
   return playerB.close.score + playerB.ranged.score + playerB.siege.score;

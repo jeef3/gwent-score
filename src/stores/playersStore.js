@@ -1,17 +1,17 @@
 import { observable } from 'mobx';
-import cardsStore from './cardsStore';
+import boardStore from './boardStore';
 
 export class PlayersStore {
   @observable
   playerA = {
     name: 'Haley',
-    score: cardsStore.playerAScore
+    score: boardStore.playerAScore
   };
 
   @observable
   playerB = {
     name: 'Jeff',
-    score: cardsStore.playerBScore
+    score: boardStore.playerBScore
   };
 }
 

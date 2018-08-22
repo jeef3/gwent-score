@@ -7,25 +7,23 @@ import { inject } from 'mobx-react';
 // export default connect(state => ({
 //   players: Selector.getScores(state)
 // }))(({ players: { playerA, playerB } }) => (
-const ScoreBar = inject('cards', 'players')(
-  ({ players: { playerA, playerB } }) => (
-    <div
-      style={{
-        alignSelf: 'center',
-        padding: '0 10px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        fontSize: 20
-      }}
-    >
-      <div>
-        {playerA.name} <strong>{playerA.score}</strong>
-      </div>
-      <div>
-        <strong>{playerB.score}</strong> {playerB.name}
-      </div>
+const ScoreBar = inject('players')(({ players: { playerA, playerB } }) => (
+  <div
+    style={{
+      alignSelf: 'center',
+      padding: '0 10px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      fontSize: 20
+    }}
+  >
+    <div>
+      {playerA.name} <strong>{playerA.score}</strong>
     </div>
-  )
-);
+    <div>
+      <strong>{playerB.score}</strong> {playerB.name}
+    </div>
+  </div>
+));
 
 export default ScoreBar;

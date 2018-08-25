@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 // import { Actions, Selector } from '../state';
@@ -164,7 +164,7 @@ WeatherCard.displayName = 'WeatherCard';
 //   })
 // )(({ board, weather, onCardClick, playerA, playerB }) => (
 const Board = inject('app', 'board', 'players')(
-  ({ app, board, players: { playerA, playerB } }) => (
+  observer(({ app, board, players: { playerA, playerB } }) => (
     <Scroller>
       <Container>
         <PlayerBoard>
@@ -267,7 +267,7 @@ const Board = inject('app', 'board', 'players')(
         </PlayerBoard>
       </Container>
     </Scroller>
-  )
+  ))
 );
 
 export default Board;

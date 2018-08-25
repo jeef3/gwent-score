@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 import UnitDialog from './UnitDialog';
 import WeatherDialog from './WeatherDialog';
@@ -16,8 +16,11 @@ const renderDialog = (dialog, dialogData) => {
   }
 };
 
-const DialogManager = ({ app }) =>
-  app.dialogVisible && renderDialog(app.dialog, app.dialogData);
+const DialogManager = inject('app')(
+  observer(
+    ({ app }) => app.dialogVisible && renderDialog(app.dialog, app.dialogData)
+  )
+);
 
 // const mapStateToProps = ({ showModal, dialog, dialogData }) => ({
 //   showModal,

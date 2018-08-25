@@ -6,6 +6,7 @@
     "formik": "^1.0.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.5",
+    "mobx-react-devtools": "^6.0.3",
     "react": "^16.4.1",
     "react-app-rewire-mobx": "^1.0.8",
     "react-dom": "^16.4.1",

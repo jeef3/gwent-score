@@ -46,6 +46,10 @@ export const StateActions = {
 
   scorch: createReducerAction('→ SCORCH', (state, action) => ({
     cards: scorch(state.cards, action.payload)
+  })),
+
+  sidesSwapped: createReducerAction('→ SIDES_SWAPPED', state => ({
+    currentPlayer: state.currentPlayer === 'a' ? 'b' : 'a'
   }))
 };
 

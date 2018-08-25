@@ -78,6 +78,10 @@ export function* handleScorch() {
   yield put(StateActions.scorch());
 }
 
+export function* handleSwapSides() {
+  yield put(StateActions.sidesSwapped());
+}
+
 export function* saga() {
   yield takeEvery(Actions.playUnit.type, handlePlayUnit);
   yield takeEvery(Actions.editUnit.type, handleEditUnit);
@@ -93,4 +97,5 @@ export function* saga() {
   yield takeEvery(Actions.restart.type, handleRestart);
 
   yield takeEvery(Actions.scorch.type, handleScorch);
+  yield takeEvery(Actions.swapSides.type, handleSwapSides);
 }

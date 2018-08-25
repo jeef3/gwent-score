@@ -17,5 +17,6 @@ export default {
   clearWeather: createAction('CLEAR_WEATHER'),
   scorch: createAction('SCORCH'),
 
-  restart: createAction('RESTART')
+  restart: createAction('RESTART'),
+  swapSides: createAction('SWAP_SIDES')
 };

@@ -2,15 +2,20 @@ export default {
   showModal: false,
   dialog: null,
   dialogData: null,
+  currentPlayer: 'a',
 
   cards: [],
 
   players: {
     playerA: {
-      name: 'Haley'
+      id: 'a',
+      name: 'Haley',
+      faction: 'monsters'
     },
     playerB: {
-      name: 'Jeff'
+      id: 'b',
+      name: 'Jeff',
+      faction: 'northern-realms'
     }
   }
 };

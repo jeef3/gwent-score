@@ -35,4 +35,11 @@ const App = () => (
 
 sagaMiddleware.run(saga);
 
+const ws = new WebSocket('ws://localhost:3001');
+
+ws.addEventListener('message', message => {
+  const action = JSON.parse(message.data);
+  store.dispatch(action);
+});
+
 export default App;

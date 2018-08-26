@@ -1,8 +1,21 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import uuid from 'uuid';
 
+import conn from '../connection';
 import { StateActions } from './reducer';
 import Actions from './actions';
+
+const doSend = gameState => conn.send(JSON.stringify(gameState));
+
+function* sendGameState() {
+  if (!conn) {
+    return;
+  }
+
+  const { players, cards } = yield select(state => state);
+
+  yield call(doSend, { players, cards });
+}
 
 export function* handlePlayUnit(action) {
   const {
@@ -18,6 +31,7 @@ export function* handleEditUnit(action) {
   } = action;
 
   yield put(StateActions.modalShown({ dialog: 'unit', data: card }));
+  yield call(sendGameState);
 }
 
 export function* handlePlayWeather() {
@@ -45,6 +59,8 @@ export function* handleAddCard(action) {
       })
     );
   }
+
+  yield call(sendGameState);
 }
 
 export function* handleEditCard(action) {
@@ -54,6 +70,7 @@ export function* handleEditCard(action) {
 
   yield put(StateActions.cardEdited({ card }));
   yield put(StateActions.modalHidden());
+  yield call(sendGameState);
 }
 
 export function* handleRemoveCard(action) {
@@ -63,23 +80,34 @@ export function* handleRemoveCard(action) {
 
   yield put(StateActions.cardRemoved({ card }));
   yield put(StateActions.modalHidden());
+  yield call(sendGameState);
 }
 
 export function* handleClearWeather() {
   yield put(StateActions.clearWeather());
   yield put(StateActions.modalHidden());
+  yield call(sendGameState);
 }
 
 export function* handleRestart() {
   yield put(StateActions.restart());
+  yield call(sendGameState);
 }
 
 export function* handleScorch() {
   yield put(StateActions.scorch());
+  yield call(sendGameState);
 }
 
 export function* handleSwapSides() {
   yield put(StateActions.sidesSwapped());
+}
+
+export function* handleReceiveGameState(action) {
+  const {
+    payload: { players, cards }
+  } = action;
+  yield put(StateActions.gameStateUpdated({ players, cards }));
 }
 
 export function* saga() {
@@ -98,4 +126,6 @@ export function* saga() {
 
   yield takeEvery(Actions.scorch.type, handleScorch);
   yield takeEvery(Actions.swapSides.type, handleSwapSides);
+
+  yield takeEvery(Actions.receiveGameState.type, handleReceiveGameState);
 }

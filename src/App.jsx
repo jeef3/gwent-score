@@ -9,26 +9,15 @@ import DialogManager from './components/DialogManager';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import ScoreBar from './components/ScoreBar';
-import { saga, reducer } from './state';
-
-const ws = new WebSocket('ws://localhost:3001');
+import { saga, reducer, Actions } from './state';
+import conn from './connection';
 
 const composeEnhancers = composeWithDevTools({ name: 'Client' });
 const sagaMiddleware = createSagaMiddleware();
 
-const wsMiddleware = store => next => action => {
-  console.log('sending to ws');
-
-  if (action.type.startsWith('→')) {
-    ws.send(JSON.stringify(action));
-  }
-
-  return next(action);
-};
-
 const store = createStore(
   reducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware, wsMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
 const App = () => (
@@ -47,9 +36,9 @@ const App = () => (
 
 sagaMiddleware.run(saga);
 
-ws.addEventListener('message', message => {
-  const action = JSON.parse(message.data);
-  store.dispatch(action);
+conn.addEventListener('message', message => {
+  const gameState = JSON.parse(message.data);
+  store.dispatch(Actions.receiveGameState(gameState));
 });
 
 export default App;

@@ -4,7 +4,7 @@ const wss = new WebSocket.Server({
   port: 3001
 });
 
-const gameState = {
+let gameState = {
   cards: [
     {
       id: '123',
@@ -32,19 +32,16 @@ wss.on('connection', ws => {
   console.log('user connected');
 
   ws.on('message', message => {
-    console.log('received:', message);
+    gameState = JSON.parse(message);
+
+    console.log('received game update', gameState);
 
     wss.clients.forEach(client => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        client.send(JSON.stringify(gameState));
       }
     });
   });
 
-  ws.send(
-    JSON.stringify({
-      type: '→ GAME_STATE_UPDATED',
-      payload: gameState
-    })
-  );
+  ws.send(JSON.stringify(gameState));
 });

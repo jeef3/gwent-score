@@ -18,5 +18,7 @@ export default {
   scorch: createAction('SCORCH'),
 
   restart: createAction('RESTART'),
-  swapSides: createAction('SWAP_SIDES')
+  swapSides: createAction('SWAP_SIDES'),
+
+  receiveGameState: createAction('RECEIVE_GAME_STATE')
 };

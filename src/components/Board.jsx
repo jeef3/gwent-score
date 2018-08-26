@@ -19,7 +19,10 @@ const Container = styled.div`
 
   display: grid;
   grid-template-rows: 1fr auto 1fr;
-  grid-template-areas: 'playerA', 'weather', 'playerB';
+  grid-template-areas: ${({ currentPlayer }) =>
+    currentPlayer === 'a'
+      ? '"player-a" "weather" "player-b"'
+      : '"player-b" "weather" "player-a"'};
 `;
 Container.displayName = 'Container';
 
@@ -38,6 +41,7 @@ const Row = styled.div`
   grid-template-columns: 1fr 50px 50px;
   grid-template-rows: 50px 1fr;
   grid-template-areas: 'cards score add' 'cards unset unset';
+  grid-area: ${({ combat }) => combat};
 `;
 Row.displayName = 'Row';
 
@@ -105,6 +109,12 @@ Scroller.displayName = 'Scroller';
 
 const PlayerBoard = styled.div`
   display: grid;
+
+  grid-area: ${({ player }) => `player-${player}`};
+  grid-template-areas: ${({ currentPlayer, player }) =>
+    currentPlayer === player
+      ? '"siege" "ranged" " close"'
+      : '"close" "ranged" "siege"'};
 `;
 PlayerBoard.displayName = 'PlayerBoard';
 
@@ -122,6 +132,7 @@ const WeatherCards = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-area: weather;
 `;
 WeatherCards.displayName = 'WeatherCards';
 
@@ -140,7 +151,8 @@ WeatherCard.displayName = 'WeatherCard';
 export default connect(
   state => ({
     board: Selector.getFullBoard(state),
-    weather: Selector.getActiveWeather(state)
+    weather: Selector.getActiveWeather(state),
+    currentPlayer: state.currentPlayer
   }),
   dispatch => ({
     onCardClick: card => dispatch(Actions.editUnit({ card })),
@@ -161,11 +173,11 @@ export default connect(
         dispatch(Actions.playUnit({ card: { player: 'b', combat: 'siege' } }))
     }
   })
-)(({ board, weather, onCardClick, playerA, playerB }) => (
+)(({ board, weather, onCardClick, playerA, playerB, currentPlayer }) => (
   <Scroller>
-    <Container>
-      <PlayerBoard>
-        <Row>
+    <Container currentPlayer={currentPlayer}>
+      <PlayerBoard currentPlayer={currentPlayer} player="a">
+        <Row combat="siege">
           <CombatRowBackground combat="siege" />
           <RowName>Siege</RowName>
           <CombatRow>
@@ -178,7 +190,7 @@ export default connect(
           </Add>
           <Score>{board.playerA.siege.score}</Score>
         </Row>
-        <Row>
+        <Row combat="ranged">
           <CombatRowBackground combat="ranged" />
           <RowName>Ranged</RowName>
           <CombatRow>
@@ -191,7 +203,7 @@ export default connect(
           </Add>
           <Score>{board.playerA.ranged.score}</Score>
         </Row>
-        <Row>
+        <Row combat="close">
           <CombatRowBackground combat="close" />
           <RowName>Close</RowName>
           <CombatRow>
@@ -217,8 +229,9 @@ export default connect(
           </WeatherCard>
         ))}
       </WeatherCards>
-      <PlayerBoard>
-        <Row>
+
+      <PlayerBoard currentPlayer={currentPlayer} player="b">
+        <Row combat="close">
           <CombatRowBackground combat="close" />
           <RowName>Close</RowName>
           <CombatRow>
@@ -231,7 +244,7 @@ export default connect(
           </Add>
           <Score>{board.playerB.close.score}</Score>
         </Row>
-        <Row>
+        <Row combat="ranged">
           <CombatRowBackground combat="ranged" />
           <RowName>Ranged</RowName>
           <CombatRow>
@@ -244,7 +257,7 @@ export default connect(
           </Add>
           <Score>{board.playerB.ranged.score}</Score>
         </Row>
-        <Row>
+        <Row combat="siege">
           <CombatRowBackground combat="siege" />
           <RowName>Siege</RowName>
           <CombatRow>

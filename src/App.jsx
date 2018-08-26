@@ -9,7 +9,8 @@ import DialogManager from './components/DialogManager';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import ScoreBar from './components/ScoreBar';
-import { saga, reducer } from './state';
+import { saga, reducer, Actions } from './state';
+import conn from './connection';
 
 const composeEnhancers = composeWithDevTools({ name: 'Client' });
 const sagaMiddleware = createSagaMiddleware();
@@ -34,5 +35,10 @@ const App = () => (
 );
 
 sagaMiddleware.run(saga);
+
+conn.addEventListener('message', message => {
+  const gameState = JSON.parse(message.data);
+  store.dispatch(Actions.receiveGameState(gameState));
+});
 
 export default App;

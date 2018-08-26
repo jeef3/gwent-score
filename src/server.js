@@ -5,24 +5,17 @@ const wss = new WebSocket.Server({
 });
 
 let gameState = {
-  cards: [
-    {
-      id: '123',
-      player: 'b',
-      points: 15,
-      hero: true,
-      combat: 'ranged'
-    }
-  ],
+  cards: [],
+
   players: {
     playerA: {
       id: 'a',
-      name: 'Bob',
+      name: 'Haley',
       faction: 'monsters'
     },
     playerB: {
       id: 'b',
-      name: 'J',
+      name: 'Jeff',
       faction: 'northern-realms'
     }
   }

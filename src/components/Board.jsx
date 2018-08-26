@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { Actions, Selector } from '../state';
-import woodTexture from '../assets/cherry4.jpg';
+import woodTexture from '../assets/wood.jpg';
 import WEATHER_CARDS from '../weatherCards';
 import CombatRowBackground from './molecules/CombatRowBackground';
 import SpecialIcon from './atoms/SpecialIcon';

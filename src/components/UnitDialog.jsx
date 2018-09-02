@@ -65,7 +65,7 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
         <ItemSelect
           downButton={minus}
           upButton={plus}
-          items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+          items={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]}
           value={values.points}
           renderValue={() => (
             <PointRing
@@ -96,8 +96,14 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           }}
         />
 
-        <ItemSelect
-          items={[
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateRows: 'auto auto auto auto',
+            gridTemplateColumns: 'auto auto auto auto'
+          }}
+        >
+          {[
             '',
             'muster',
             'morale-boost',
@@ -106,17 +112,30 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
             'spy',
             'tight-bond',
             'scorch'
-          ]}
-          value={values.attr}
-          renderValue={() => (
-            <AttrRing faction="northern-realms">
-              <AttrIcon name={values.attr} />
-            </AttrRing>
-          )}
-          onChange={value => {
-            setFieldValue('attr', value);
-          }}
-        />
+          ].map(attr => (
+            <div key={attr}>
+              <button
+                type="button"
+                style={{
+                  margin: 5,
+                  padding: 5,
+                  cursor: 'pointer',
+                  background:
+                    values.attr === attr || (!values.attr && attr === '')
+                      ? 'red'
+                      : 'transparent',
+                  border: 0,
+                  borderRadius: 50
+                }}
+                onClick={() => setFieldValue('attr', attr)}
+              >
+                <AttrRing faction="northern-realms">
+                  <AttrIcon name={attr} />
+                </AttrRing>
+              </button>
+            </div>
+          ))}
+        </div>
 
         {values.id && (
           <button type="button" onClick={() => values.onRemoveCard(values)}>

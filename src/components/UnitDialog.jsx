@@ -103,7 +103,8 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           style={{
             display: 'grid',
             gridTemplateRows: 'auto auto auto',
-            gridTemplateColumns: 'auto auto auto'
+            gridTemplateColumns: 'auto auto auto',
+            justifyContent: 'center'
           }}
         >
           {[

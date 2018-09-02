@@ -10,7 +10,7 @@ export default {
     playerA: {
       id: 'a',
       name: 'Haley',
-      faction: 'monsters'
+      faction: 'monster'
     },
     playerB: {
       id: 'b',

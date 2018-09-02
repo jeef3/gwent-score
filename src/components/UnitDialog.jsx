@@ -87,7 +87,10 @@ const InnerForm = ({ values, handleChange, handleSubmit, setFieldValue }) => (
           items={['close', 'ranged', 'siege']}
           value={values.combat}
           renderValue={() => (
-            <CombatRing hero={false} faction="northern-realms">
+            <CombatRing
+              hero={false}
+              faction={values.players[values.player].faction}
+            >
               <CombatIcon name={values.combat} />
             </CombatRing>
           )}
@@ -164,6 +167,7 @@ const TheForm = withFormik({
   mapPropsToValues: ({
     id,
     player,
+    players,
     hero,
     points,
     combat,
@@ -173,6 +177,7 @@ const TheForm = withFormik({
   }) => ({
     id,
     player,
+    players,
     hero,
     points: points === null || points === undefined ? 5 : points,
     combat,
@@ -191,19 +196,25 @@ const TheForm = withFormik({
 })(InnerForm);
 
 export default connect(
-  null,
+  state => ({
+    players: state.players
+  }),
   dispatch => ({
     onRemoveCard: card => dispatch(Actions.removeCard({ card })),
     onCancel: () => dispatch(Actions.closeModal()),
     onAddCard: card => dispatch(Actions.addCard({ card })),
     onEditCard: card => dispatch(Actions.editCard({ card }))
   })
-)(({ card, onRemoveCard, onCancel, onAddCard, onEditCard }) => (
+)(({ players, card, onRemoveCard, onCancel, onAddCard, onEditCard }) => (
   <React.Fragment>
     <Overlay />
     <Dialog>
       <TheForm
         {...card}
+        players={{
+          a: players.playerA,
+          b: players.playerB
+        }}
         onRemoveCard={onRemoveCard}
         onCancel={onCancel}
         onAddCard={onAddCard}

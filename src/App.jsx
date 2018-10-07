@@ -22,7 +22,7 @@ const store = createStore(
 
 const App = () => (
   <Provider store={store}>
-    <div>
+    <React.Fragment>
       <PageLayout>
         <ScoreBar />
         <Board />
@@ -30,7 +30,7 @@ const App = () => (
       </PageLayout>
 
       <DialogManager />
-    </div>
+    </React.Fragment>
   </Provider>
 );
 

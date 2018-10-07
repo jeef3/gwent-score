@@ -24,7 +24,8 @@
     "lint": "eslint src/**/*.js*; stylelint src",
     "eject": "react-scripts eject",
     "serve": "node src/server.js",
-    "serve:watch": "nodemon src/server.js"
+    "serve:watch": "nodemon src/server.js",
+    "deploy": "firebase deploy"
   },
   "devDependencies": {
     "@jeef3/stylelint-config-property-sort-order-nice": "^1.0.2",

@@ -9,11 +9,18 @@ import Actions from './actions';
 // const doSend = gameState => conn.send(JSON.stringify(gameState));
 const db = firebase.firestore();
 const doSend = gameState => {
-  db.collection('gameState')
-    .set('current', gameState)
-    .then(snapshot => {
-      console.log('done');
+  const gameStateRef = db.collection('gameState');
+  console.log('readying...', gameState);
+  try {
+    gameStateRef.doc('current').set({
+      cards: gameState.cards || [],
+      players: gameState.players
     });
+    console.log('setn');
+  } catch (e) {
+    console.log('failed');
+    console.error(e);
+  }
 };
 
 function* sendGameState() {
@@ -22,6 +29,7 @@ function* sendGameState() {
   // }
 
   const { players, cards } = yield select(state => state);
+  console.log('got state', players, cards);
   yield call(doSend, { players, cards });
 }
 
@@ -50,11 +58,19 @@ export function* handleCloseModal() {
   yield put(StateActions.modalHidden());
 }
 
+const cleanCard = dirtyCard => {
+  const { attr, combat, hero, id, player, points } = dirtyCard;
+
+  return { attr, combat, hero, id, player, points };
+};
+
 export function* handleAddCard(action) {
   const card = {
-    ...action.payload.card,
+    ...cleanCard(action.payload.card),
     id: uuid()
   };
+
+  console.log('adding...', card);
 
   yield put(StateActions.cardAdded({ card }));
   yield put(StateActions.modalHidden());
@@ -72,9 +88,7 @@ export function* handleAddCard(action) {
 }
 
 export function* handleEditCard(action) {
-  const {
-    payload: { card }
-  } = action;
+  const card = cleanCard(action.payload.card);
 
   yield put(StateActions.cardEdited({ card }));
   yield put(StateActions.modalHidden());
@@ -82,9 +96,7 @@ export function* handleEditCard(action) {
 }
 
 export function* handleRemoveCard(action) {
-  const {
-    payload: { card }
-  } = action;
+  const card = cleanCard(action.payload.card);
 
   yield put(StateActions.cardRemoved({ card }));
   yield put(StateActions.modalHidden());

@@ -2,34 +2,21 @@ import { call, put, select, takeEvery } from 'redux-saga/effects';
 import uuid from 'uuid';
 import firebase from 'firebase/app';
 
-// import conn from '../connection';
 import { StateActions } from './reducer';
 import Actions from './actions';
 
-// const doSend = gameState => conn.send(JSON.stringify(gameState));
 const db = firebase.firestore();
-const doSend = gameState => {
-  const gameStateRef = db.collection('gameState');
-  console.log('readying...', gameState);
-  try {
-    gameStateRef.doc('current').set({
+const doSend = gameState =>
+  db
+    .collection('gameState')
+    .doc('current')
+    .set({
       cards: gameState.cards || [],
       players: gameState.players
     });
-    console.log('setn');
-  } catch (e) {
-    console.log('failed');
-    console.error(e);
-  }
-};
 
 function* sendGameState() {
-  // if (!conn) {
-  //   return;
-  // }
-
   const { players, cards } = yield select(state => state);
-  console.log('got state', players, cards);
   yield call(doSend, { players, cards });
 }
 
@@ -58,19 +45,19 @@ export function* handleCloseModal() {
   yield put(StateActions.modalHidden());
 }
 
-const cleanCard = dirtyCard => {
-  const { attr, combat, hero, id, player, points } = dirtyCard;
-
-  return { attr, combat, hero, id, player, points };
-};
+const CLEAN_PROPS = ['attr', 'combat', 'hero', 'id', 'player', 'points'];
+const cleanCard = dirtyCard =>
+  CLEAN_PROPS.reduce(
+    (p, prop) =>
+      dirtyCard[prop] === undefined ? p : { ...p, [prop]: dirtyCard[prop] },
+    {}
+  );
 
 export function* handleAddCard(action) {
   const card = {
     ...cleanCard(action.payload.card),
     id: uuid()
   };
-
-  console.log('adding...', card);
 
   yield put(StateActions.cardAdded({ card }));
   yield put(StateActions.modalHidden());

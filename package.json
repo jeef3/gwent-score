@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^5.5.3",
     "firebase-tools": "^5.0.1",
     "formik": "^1.0.1",
     "react": "^16.4.1",

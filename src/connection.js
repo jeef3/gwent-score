@@ -1,5 +1,11 @@
-const { hostname } = window.location;
+import firebase from 'firebase/app';
 
-const ws = new WebSocket(`ws://${hostname}:3001`);
+require('firebase/firestore');
 
-export default ws;
+firebase.initializeApp({});
+
+// const { hostname } = window.location;
+
+// const ws = new WebSocket(`ws://${hostname}:3001`);
+
+// export default ws;

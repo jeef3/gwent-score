@@ -1,19 +1,27 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import uuid from 'uuid';
+import firebase from 'firebase/app';
 
-import conn from '../connection';
+// import conn from '../connection';
 import { StateActions } from './reducer';
 import Actions from './actions';
 
-const doSend = gameState => conn.send(JSON.stringify(gameState));
+// const doSend = gameState => conn.send(JSON.stringify(gameState));
+const db = firebase.firestore();
+const doSend = gameState => {
+  db.collection('gameState')
+    .set('current', gameState)
+    .then(snapshot => {
+      console.log('done');
+    });
+};
 
 function* sendGameState() {
-  if (!conn) {
-    return;
-  }
+  // if (!conn) {
+  //   return;
+  // }
 
   const { players, cards } = yield select(state => state);
-
   yield call(doSend, { players, cards });
 }
 

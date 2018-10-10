@@ -45,6 +45,10 @@ export default () =>
     }
 
     html {
+      overflow: hidden;
+      position: fixed;
+      height: 100%;
+
       font: 100%/1.5 "Halis GR", sans-serif;
       font-weight: 400;
 
@@ -54,6 +58,13 @@ export default () =>
     }
 
     body {
+      width: 100vw;
+      height: 100vh;
+
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+
       margin: 0;
     }
   `;

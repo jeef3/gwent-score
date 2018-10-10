@@ -1,15 +1,27 @@
 {
   "short_name": "Gwent Score",
   "name": "Gwent Score",
+  "description": "Gwent score calculator",
+
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "icon-192.png",
+      "types": "image/png",
+      "sizes": "192x192",
+      "density": 1.0
+    },
+    {
+      "src": "icon-512.png",
+      "types": "image/png",
+      "sizes": "512x512",
+      "density": 1.0
     }
   ],
+
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
+
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }

@@ -45,7 +45,15 @@ export function* handleCloseModal() {
   yield put(StateActions.modalHidden());
 }
 
-const CLEAN_PROPS = ['attr', 'combat', 'hero', 'id', 'player', 'points'];
+const CLEAN_PROPS = [
+  'attr',
+  'combat',
+  'hero',
+  'id',
+  'player',
+  'points',
+  'special'
+];
 const cleanCard = dirtyCard =>
   CLEAN_PROPS.reduce(
     (p, prop) =>

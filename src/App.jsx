@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import firebase from 'firebase/app';
+import * as firebaseui from 'firebaseui';
 
 import Board from './components/Board';
 import DialogManager from './components/DialogManager';
@@ -25,6 +26,16 @@ const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+
+const uiConfig = {
+  signInSuccessUrl: 'gwent.jeef3.com',
+  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+  tosUrl: 'example.com',
+  privacyPolicyUrl: 'example.com'
+};
+
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
+ui.start('#auth', uiConfig);
 
 const App = () => (
   <Provider store={store}>

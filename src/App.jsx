@@ -1,34 +1,31 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import firebase from 'firebase/app';
+// import { createStore, applyMiddleware } from 'redux';
+// import { Provider } from 'react-redux';
+// import createSagaMiddleware from 'redux-saga';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 import Board from './components/Board';
 import DialogManager from './components/DialogManager';
 import PageLayout from './components/PageLayout';
 import TabBar from './components/TabBar';
 import ScoreBar from './components/ScoreBar';
-import { saga, reducer, Actions } from './state';
+// import { saga, reducer, Actions, StateActions } from './state';
+import useDatabase from './useDatabase';
 
-const db = firebase.firestore();
+// const composeEnhancers = composeWithDevTools({ name: 'Client' });
+// const sagaMiddleware = createSagaMiddleware();
 
-db.settings({
-  timestampsInSnapshots: true
-});
+// const store = createStore(
+//   reducer,
+//   composeEnhancers(applyMiddleware(sagaMiddleware))
+// );
+//
 
-const composeEnhancers = composeWithDevTools({ name: 'Client' });
-const sagaMiddleware = createSagaMiddleware();
+const App = () => {
+  useDatabase();
 
-const store = createStore(
-  reducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
-);
-
-const App = () => (
-  <Provider store={store}>
-    <React.Fragment>
+  return (
+    <>
       <PageLayout>
         <ScoreBar />
         <Board />
@@ -36,16 +33,10 @@ const App = () => (
       </PageLayout>
 
       <DialogManager />
-    </React.Fragment>
-  </Provider>
-);
+    </>
+  );
+};
 
-sagaMiddleware.run(saga);
-
-db.collection('gameState')
-  .doc('current')
-  .onSnapshot(snapshot => {
-    store.dispatch(Actions.receiveGameState(snapshot.data()));
-  });
+// sagaMiddleware.run(saga);
 
 export default App;

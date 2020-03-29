@@ -7,15 +7,7 @@ export default {
   cards: [],
 
   players: {
-    playerA: {
-      id: 'a',
-      name: 'Haley',
-      faction: 'monster'
-    },
-    playerB: {
-      id: 'b',
-      name: 'Jeff',
-      faction: 'northern-realms'
-    }
+    playerA: {},
+    playerB: {}
   }
 };
